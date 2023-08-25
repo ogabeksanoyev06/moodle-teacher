@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "AppHome",
+  name: "curriculum-lesson-pair",
 };
 </script>
 

@@ -14,61 +14,53 @@
           <AppText weight="600" size="12" class="color-text-grey mb-20">
             Moodle OTM axborot tizimi
           </AppText>
-          <ValidationObserver v-slot="{ handleSubmit }" class="w-100">
-            <form @submit.prevent="handleSubmit(loginToSystem)">
-              <div class="form-group">
-                <base-input
-                  type="text"
-                  vid="ID"
-                  rules="required"
-                  placeholder="Talaba ID"
-                  v-model="request.login"
-                >
-                  <template slot="append">
-                    <img src="/icons/account.svg" alt="" />
-                  </template>
-                </base-input>
-              </div>
-              <div class="form-group">
-                <base-input
-                  id="password"
-                  :type="passwordField ? 'text' : 'password'"
-                  vid="Parol"
-                  rules="required"
-                  placeholder="Parol"
-                  v-model="request.password"
-                >
-                  <template #append>
-                    <img
-                      src="/icons/eye.svg"
-                      alt=""
-                      @click="confirmationSee"
-                      v-if="passwordField"
-                    />
-                    <img
-                      src="/icons/close-eye.svg"
-                      alt="close"
-                      @click="confirmationSee"
-                      v-if="!passwordField"
-                    />
-                  </template>
-                </base-input>
-              </div>
+          <el-form :model="request" :rules="rules" ref="request" class="w-100">
+            <el-form-item prop="login">
+              <el-input placeholder="Login  / Xodim ID" v-model="request.login">
+                <template slot="append">
+                  <img src="/icons/account.svg" alt="" />
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="login">
+              <el-input
+                placeholder="Parol"
+                v-model="request.password"
+                id="password"
+                type="password"
+              >
+                <template slot="append">
+                  <img
+                    src="/icons/eye.svg"
+                    alt=""
+                    @click="confirmationSee"
+                    v-if="passwordConfirmationField"
+                  />
+                  <img
+                    src="/icons/close-eye.svg"
+                    alt="close"
+                    @click="confirmationSee"
+                    v-if="!passwordConfirmationField"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
               <AppButton
                 theme="main"
-                type="submit"
-                :font-size="14"
-                :sides="20"
-                :weight="500"
-                :height="40"
-                class="login mb-20 w-100"
+                :font-size="12"
+                :sides="30"
+                height="40"
+                class="w-100"
+                @click="loginToSystem('request')"
               >
                 Tizimga kirish
               </AppButton>
-            </form>
-          </ValidationObserver>
+            </el-form-item>
+          </el-form>
         </div>
       </div>
+
       <div class="auth__photo" v-if="!isDesktopSmall">
         <kinesis-element class="layer" :strength="15">
           <img src="/svg/largeLogo.svg" alt="" />
@@ -79,19 +71,16 @@
   </kinesis-container>
 </template>
 <script>
-import AppButton from "../../shared-components/AppButton.vue";
-import BaseInput from "../../shared-components/BaseInput.vue";
-import { ValidationObserver } from "vee-validate";
+import AppButton from "@/components/shared-components/AppButton.vue";
 import { KinesisContainer, KinesisElement } from "vue-kinesis";
 import { mapMutations } from "vuex";
+import TokenService from "@/service/TokenService";
 export default {
   name: "AppLogin",
   components: {
     "kinesis-container": KinesisContainer,
     "kinesis-element": KinesisElement,
     AppButton,
-    BaseInput,
-    ValidationObserver,
   },
   data() {
     return {
@@ -99,7 +88,22 @@ export default {
         login: "",
         password: "",
       },
-      passwordField: true,
+      passwordConfirmationField: true,
+      rules: {
+        login: [
+          {
+            required: true,
+            message: "Maydon bo'sh bo'lmasligi kerak",
+            trigger: "blur",
+          },
+          {
+            min: 3,
+            max: 5,
+            message: "Length should be 3 to 5",
+            trigger: "blur",
+          },
+        ],
+      },
       authError: "",
       errorStatus: false,
     };
@@ -110,13 +114,40 @@ export default {
       this.setWindowWidth(document.documentElement.clientWidth);
     },
     confirmationSee() {
-      this.passwordField = !this.passwordField;
-      document.getElementById("password").type = this.passwordField
+      this.passwordConfirmationField = !this.passwordConfirmationField;
+      document.getElementById("password").type = this.passwordConfirmationField
         ? "password"
         : "text";
     },
-    loginToSystem() {
-      console.log("kkk");
+    loginToSystem(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$api
+            .post("", this.request)
+            .then((data) => {
+              if (data.error) {
+                this.authError = data.error;
+              } else {
+                TokenService.saveToken(data.result.access_token);
+                TokenService.saveRefreshToken(data.result.refresh_token);
+                TokenService.saveExpireTime(data.result.expires_in);
+                this.request.password = "";
+              }
+            })
+            .catch((error) => {
+              this.errorMes = error.response.data.error.message;
+              setTimeout(() => {
+                this.errorMes = "";
+              }, 4000);
+              this.errorStatus = true;
+              this.request.login = "";
+              this.request.password = "";
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
   },
   mounted() {
@@ -126,14 +157,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.input__block-input {
-  border-radius: 15px !important;
-}
 .auth {
   display: flex;
   align-items: center;
   min-height: 100vh;
-
   &__content {
     max-width: 50%;
     width: 100%;

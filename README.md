@@ -1,4 +1,4 @@
-# moodle-student
+# moodle-super-admin
 
 ## Project setup
 ```

@@ -19,7 +19,7 @@
           <div class="input__block-append">
             <slot name="append"></slot>
           </div>
-          <div class="input__block-append hide-password">
+          <div class="input__block-append hide-password" @click="showPassword">
             <slot name="hidePassword"></slot>
           </div>
           <input
@@ -103,6 +103,15 @@ export default {
     },
     focus() {
       this.$refs.input.focus();
+    },
+    showPassword() {
+      // if (this.type === "password") {
+      //   this.type = "text";
+      //   this.btnText = "Hide Password";
+      // } else {
+      //   this.type = "password";
+      //   this.btnText = "Show Password";
+      // }
     },
   },
   mounted() {

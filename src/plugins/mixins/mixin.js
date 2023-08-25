@@ -1,9 +1,12 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
+import { baseURL } from "../../service/apiService";
 
 Vue.mixin({
   data() {
-    return {};
+    return {
+      baseURL,
+    };
   },
   computed: {
     ...mapGetters([]),

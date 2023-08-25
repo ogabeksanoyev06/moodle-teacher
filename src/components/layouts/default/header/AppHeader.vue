@@ -39,10 +39,9 @@
                 <img src="/images/user.png" alt="" />
                 <div>
                   <span class="user-name">Anvar Egamberdiyev</span>
-                  <span class="user-role">Talaba</span>
+                  <span class="user-role">Super Administrator</span>
                 </div>
               </div>
-
               <div class="header__dropdown-user">
                 <ul
                   class="header__dropdown-user-wrap"
@@ -52,31 +51,15 @@
                     Foydalanuvchi rollari
                   </li>
                   <li class="divider"></li>
-                  <li class="header__dropdown-user-item">
-                    <router-link to="/" class="header__dropdown-user-link">
-                      <span>Kichik Admin</span>
-                    </router-link>
-                  </li>
-                  <li class="header__dropdown-user-item">
-                    <router-link to="/" class="header__dropdown-user-link">
-                      <span>O‘qituvchi</span>
-                    </router-link>
-                  </li>
-                  <li class="header__dropdown-user-item">
-                    <router-link to="/" class="header__dropdown-user-link">
-                      <span>Talaba</span>
-                    </router-link>
-                  </li>
 
                   <li class="header__dropdown-user-item">
                     <router-link
                       :to="{ name: 'dashboard-profile' }"
                       class="header__dropdown-user-link"
                     >
-                      <span>Profil</span>
+                      <span>Super Administrator</span>
                     </router-link>
                   </li>
-                  <li class="divider"></li>
                   <li class="header__dropdown-user-item logout">
                     <div class="header__dropdown-user-link">
                       <img src="/icons/logout.svg" alt="" class="mr-10" />

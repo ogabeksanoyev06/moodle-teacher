@@ -1,175 +1,210 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import TokenService from "@/service/TokenService";
+
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/landing-page",
-    name: "landing-page",
-    component: () => import("../components/landing-page"),
-  },
-  {
-    path: "/dashboard/login",
-    name: "login",
-    component: () => import("../components/layouts/auth/login.vue"),
-  },
-  {
-    path: "*",
-    name: "error",
-    component: () => import("../components/pages/ErrorPage.vue"),
-    meta: {
-      guest: true,
-    },
-  },
-  {
-    path: "/",
+    path: "/teacher",
     component: () => import("../layouts/MainLayout.vue"),
     children: [
-      // home
       {
         path: "/",
         name: "home",
         component: () => import("../views/site/home/index.vue"),
       },
-      // education
       {
-        path: "education/curriculum",
-        name: "education-curriculum",
+        path: "subject/topics",
+        name: "subject-title",
         component: () =>
-          import("../views/site/student/education/curriculum.vue"),
+          import(
+            "@/views/site/teacher/subject-store/subject-title.vue"
+          ),
       },
       {
-        path: "education/time-table",
-        name: "education-time-table",
+        path: "subject/resource",
+        name: "subject-resource",
         component: () =>
-          import("../views/site/student/education/time-table.vue"),
+          import("../views/site/teacher/subject-store/subject-resource.vue"),
       },
       {
-        path: "education/exam-table",
-        name: "education-exam-table",
+        path: "subject/resource/add",
+        name: "subject-resource-add",
         component: () =>
-          import("../views/site/student/education/exam-table.vue"),
+          import(
+            "../views/site/teacher/subject-store/subject-resource-add.vue"
+          ),
       },
       {
-        path: "education/subjects",
-        name: "education-subjects",
-        component: () => import("../views/site/student/education/subjects.vue"),
-      },
-      {
-        path: "education/attendance",
-        name: "education-attendance",
+        path: "subject/resource/catalog",
+        name: "subject-resource-catalog",
         component: () =>
-          import("../views/site/student/education/attendance.vue"),
+          import("../views/site/teacher/subject-store/subject-resource-catalog.vue"),
       },
       {
-        path: "education/performance",
-        name: "education-performance",
+        path: "subject/tasks",
+        name: "subject-mission",
         component: () =>
-          import("../views/site/student/education/performance.vue"),
+          import(
+            "../views/site/teacher/subject-store/subject-mission.vue"
+          ),
       },
+      // curriculum
       {
-        path: "education/academic-data",
-        name: "education-academic-data",
+        path: "subject/course/task",
+        name: "subject-course-mission",
         component: () =>
-          import("../views/site/student/education/academic-data.vue"),
+          import(
+            "../views/site/teacher/subject-store/subject-course-mission.vue"
+          ),
       },
       {
-        path: "education/subject-choose",
-        name: "education-subject-choose",
+        path: "teacher/calendar/plan",
+        name: "subject-calendar-plan",
         component: () =>
-          import("../views/site/student/education/subject-choose.vue"),
+          import(
+            "../views/site/teacher/subject-store/subject-calendar-plan.vue"
+          ),
       },
-      // test
       {
-        path: "test/exams",
-        name: "test-exams",
-        component: () => import("../views/site/student/test/exams.vue"),
-      },
-      // retraining
-      {
-        path: "retraining/application",
-        name: "retraining-application",
+        path: "curriculum/curriculum-list",
+        name: "curriculum-curriculum-list",
         component: () =>
-          import("../views/site/student/retraining/application.vue"),
+          import(
+            "../views/site/super-admin/curriculum/curriculum-curriculum-list.vue"
+          ),
       },
       {
-        path: "retraining/exam-table",
-        name: "retraining-exam-table",
+        path: "curriculum/semester",
+        name: "curriculum-semester",
         component: () =>
-          import("../views/site/student/retraining/exam-table.vue"),
+          import(
+            "../views/site/super-admin/curriculum/curriculum-semester.vue"
+          ),
       },
       {
-        path: "retraining/performance",
-        name: "retraining-performance",
+        path: "curriculum/curriculum-block",
+        name: "curriculum-curriculum-block",
         component: () =>
-          import("../views/site/student/retraining/performance.vue"),
+          import(
+            "../views/site/super-admin/curriculum/curriculum-curriculum-block.vue"
+          ),
       },
       {
-        path: "retraining/time-table",
-        name: "retraining-time-table",
+        path: "curriculum/student-register",
+        name: "curriculum-student-register",
         component: () =>
-          import("../views/site/student/retraining/time-table.vue"),
-      },
-      //student
-      {
-        path: "student/decree",
-        name: "student-decree",
-        component: () => import("../views/site/student/decree.vue"),
+          import(
+            "../views/site/super-admin/curriculum/curriculum-student-register.vue"
+          ),
       },
       {
-        path: "student/contract",
-        name: "student-contract",
-        component: () => import("../views/site/student/contract.vue"),
-      },
-      {
-        path: "student/reference",
-        name: "student-reference",
-        component: () => import("../views/site/student/reference.vue"),
-      },
-      {
-        path: "student/document",
-        name: "student-document",
-        component: () => import("../views/site/student/document.vue"),
-      },
-      {
-        path: "student/circulation-sheet",
-        name: "student-circulation-sheet",
-        component: () => import("../views/site/student/circulation-sheet.vue"),
-      },
-      {
-        path: "student/personal-data",
-        name: "student-personal-data",
-        component: () => import("../views/site/student/personal-data.vue"),
-      },
-      {
-        path: "student/graduate-qualifying",
-        name: "student-graduate-qualifying",
+        path: "curriculum/schedule-info",
+        name: "curriculum-schedule-info",
         component: () =>
-          import("../views/site/student/graduate-qualifying.vue"),
+          import(
+            "../views/site/super-admin/curriculum/curriculum-schedule-info.vue"
+          ),
       },
-      // message
       {
-        path: "message/my-messages",
-        name: "message-my-messages",
+        path: "curriculum/schedule-info-view",
+        name: "curriculum-schedule-info-view",
         component: () =>
-          import("../views/site/student/message/my-messages.vue"),
+          import(
+            "../views/site/super-admin/curriculum/curriculum-schedule-info-view.vue"
+          ),
       },
       {
-        path: "message/compose",
-        name: "message-compose",
-        component: () => import("../views/site/student/message/compose.vue"),
+        path: "curriculum/exam-schedule-info",
+        name: "curriculum-exam-schedule-info",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-exam-schedule-info.vue"
+          ),
       },
-      // dashboard
+      {
+        path: "curriculum/exam-schedule-info-view",
+        name: "curriculum-exam-schedule-info-view",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-exam-schedule-info-view.vue"
+          ),
+      },
+      {
+        path: "curriculum/marking-system",
+        name: "curriculum-marking-system",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-marking-system.vue"
+          ),
+      },
+      {
+        path: "curriculum/grade-type",
+        name: "curriculum-grade-type",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-grade-type.vue"
+          ),
+      },
+      {
+        path: "curriculum/rating-grade",
+        name: "curriculum-rating-grade",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-rating-grade.vue"
+          ),
+      },
+      {
+        path: "curriculum/lesson-pair",
+        name: "curriculum-lesson-pair",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-lesson-pair.vue"
+          ),
+      },
+      {
+        path: "curriculum/lesson-pair",
+        name: "curriculum-lesson-pair",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-lesson-pair.vue"
+          ),
+      },
+      {
+        path: "curriculum/curriculum-edit",
+        name: "curriculum-curriculum-edit",
+        component: () =>
+          import(
+            "../views/site/super-admin/curriculum/curriculum-curriculum-edit.vue"
+          ),
+      },
+
+      // transfer
+      {
+        path: "transfer/subject-register",
+        name: "transfer-subject-register",
+        component: () =>
+          import(
+            "../views/site/super-admin/transfer/transfer-subject-register.vue"
+          ),
+      },
+      // hemis-struktura
+      {
+        path: "hemis-baza",
+        name: "hemis-baza",
+        component: () => import("../views/site/super-admin/hemis/index.vue"),
+      },
+      {
+        path: "curriculum-hemis",
+        name: "curriculum-hemis",
+        component: () =>
+          import("../views/site/super-admin/hemis/curriculum-hemis.vue"),
+      },
+      // dashboadr
       {
         path: "dashboard/profile",
         name: "dashboard-profile",
-        component: () => import("../views/site/student/dashboard/profile.vue"),
-      },
-      {
-        path: "dashboard/logins",
-        name: "dashboard-logins",
-        component: () => import("../views/site/student/dashboard/logins.vue"),
+        component: () => import("../views/cabinet/profile.vue"),
       },
     ],
   },
@@ -177,32 +212,8 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  linkExactActiveClass: "active",
+  base: process.env.BASE_URL,
   routes,
-});
-router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0);
-  next();
-});
-router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const onlyWhenLoggedOut = to.matched.some(
-    (record) => record.meta.onlyWhenLoggedOut
-  );
-  const token = false;
-  if (requiresAuth) {
-    if (!onlyWhenLoggedOut && !token) {
-      return next({ name: "landing-page" });
-    }
-    if (requiresAuth && !token) {
-      return next({ name: "login" });
-    } else if (to.name === "login" && token) {
-      return next({ name: "home" });
-    } else {
-      return next();
-    }
-  }
-  next();
 });
 
 export default router;
