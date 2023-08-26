@@ -152,7 +152,7 @@ export default {
             {
               title: "Imtixon ro'yxati",
               id: 23,
-              link: "curriculum-education-year",
+              link: "exam-list",
             },
 
           ],

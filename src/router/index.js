@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/teacher",
+    path: "/",
     component: () => import("../layouts/MainLayout.vue"),
     children: [
       {
@@ -14,7 +14,7 @@ const routes = [
         component: () => import("../views/site/home/index.vue"),
       },
       {
-        path: "subject/topics",
+        path: "teacher/subject/topics",
         name: "subject-title",
         component: () =>
           import(
@@ -22,13 +22,13 @@ const routes = [
           ),
       },
       {
-        path: "subject/resource",
+        path: "teacher/subject/resource",
         name: "subject-resource",
         component: () =>
           import("../views/site/teacher/subject-store/subject-resource.vue"),
       },
       {
-        path: "subject/resource/add",
+        path: "teacher/subject/resource/add",
         name: "subject-resource-add",
         component: () =>
           import(
@@ -36,13 +36,13 @@ const routes = [
           ),
       },
       {
-        path: "subject/resource/catalog",
+        path: "teacher/subject/resource/catalog",
         name: "subject-resource-catalog",
         component: () =>
           import("../views/site/teacher/subject-store/subject-resource-catalog.vue"),
       },
       {
-        path: "subject/tasks",
+        path: "teacher/subject/tasks",
         name: "subject-mission",
         component: () =>
           import(
@@ -51,7 +51,7 @@ const routes = [
       },
       // curriculum
       {
-        path: "subject/course/task",
+        path: "teacher/subject/course/task",
         name: "subject-course-mission",
         component: () =>
           import(
@@ -59,7 +59,7 @@ const routes = [
           ),
       },
       {
-        path: "teacher/calendar/plan",
+        path: "teacher/teacher/calendar/plan",
         name: "subject-calendar-plan",
         component: () =>
           import(
@@ -67,11 +67,11 @@ const routes = [
           ),
       },
       {
-        path: "curriculum/curriculum-list",
-        name: "curriculum-curriculum-list",
+        path: "teacher/exam/list",
+        name: "exam-list",
         component: () =>
           import(
-            "../views/site/super-admin/curriculum/curriculum-curriculum-list.vue"
+            "../views/site/teacher/learning-prosess/exam-list.vue"
           ),
       },
       {
