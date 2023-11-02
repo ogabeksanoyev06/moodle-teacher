@@ -5,8 +5,14 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/landing-page",
+    name: "landing-page",
+    component: () => import("../components/landing-page/index.vue"),
+  },
+  {
     path: "/",
     component: () => import("../layouts/MainLayout.vue"),
+    meta: { requiresAuth: true },
     children: [
       {
         path: "/",
@@ -214,6 +220,29 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
+  next();
+});
+
+router.beforeEach((to, from, next) => {
+  const isLogin = JSON.parse(localStorage.getItem("employeeInfo"));
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isLogin) {
+      next("/landing-page");
+      return;
+    }
+  }
+
+  if (to.matched.some((record) => record.meta.guestOnly)) {
+    if (isLogin) {
+      next("/");
+      return;
+    }
+  }
+
+  next();
 });
 
 export default router;

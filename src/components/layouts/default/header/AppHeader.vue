@@ -36,10 +36,10 @@
                 <img :src="baseURL + user.photo" alt="" />
               </div> -->
               <div class="header__account-photo">
-                <img src="/images/user.png" alt="" />
+                <img :src="employeeInfo.picture" alt="" />
                 <div>
-                  <span class="user-name">Anvar Egamberdiyev</span>
-                  <span class="user-role">Super Administrator</span>
+                  <span class="user-name">{{employeeInfo.name}}</span>
+                  <span class="user-role">O'qituvchi</span>
                 </div>
               </div>
               <div class="header__dropdown-user">
@@ -61,7 +61,7 @@
                     </router-link>
                   </li>
                   <li class="header__dropdown-user-item logout">
-                    <div class="header__dropdown-user-link">
+                    <div @click="logout" class="header__dropdown-user-link">
                       <img src="/icons/logout.svg" alt="" class="mr-10" />
                       <span>Chiqish</span>
                     </div>
@@ -87,9 +87,14 @@ export default {
       languageDropdown: false,
       accountDropdown: false,
       setLang: "O‘zbekcha",
+      employeeInfo:JSON.parse(localStorage.getItem('employeeInfo')).details
     };
   },
   methods: {
+    logout(){
+      localStorage.clear()
+      this.$router.push('/landing-page')
+    },
     hideLanguageDropdown() {
       this.languageDropdown = false;
     },
