@@ -1,5 +1,15 @@
 <template>
   <div id="home__container">
+    <IFRAME
+        src="https://mxoe230002.rna1.blindsidenetworks.com/html5client/join?sessionToken=ukisosxqamxanyq9"
+        allow="geolocation *; microphone *; camera *; display-capture *;"
+        allowFullScreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        sandbox="allow-same-origin allow-scripts allow-modals allow-forms"
+        style="width: 100%; height: 700px; border: 0"
+        scrolling="no"
+    ></IFRAME>
     <LandingHeader />
     <HeroBanner />
     <div class="container mb-20 mt-20">

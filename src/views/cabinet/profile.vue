@@ -24,7 +24,7 @@
                   rules="required"
                   label="To‘liq ismi º"
                   placeholder="To‘liq ismi º"
-                  v-model="profile.fullName"
+                  v-model="profile.name"
                   disabled
                 />
                 <base-input
@@ -33,7 +33,16 @@
                   rules="required"
                   label="ID raqami"
                   placeholder="ID raqami"
-                  v-model="profile.ID"
+                  v-model="profile.employee_id_number"
+                  disabled
+                />
+                <base-input
+                  type="text"
+                  vid="Telefon raqam"
+                  rules="required"
+                  label="Telefon raqam"
+                  placeholder="Telefon raqam"
+                  v-model="profile.phone"
                   disabled
                 />
                 <base-input
@@ -82,7 +91,7 @@
               </div>
               <div class="box__inner-right">
                 <div class="account__photo">
-                  <img src="/images/account.png" alt="" />
+                  <img :src="profile.picture" alt="" />
                 </div>
                 <!-- <div class="m_photo">
                   <i class="fa fa-camera"></i>
@@ -116,14 +125,7 @@ export default {
   components: { ValidationObserver, AppButton, BaseInput },
   data() {
     return {
-      profile: {
-        fullName: "Og'abek Sanoyev",
-        login: "23567897653989",
-        ID: "123456789",
-        email: "ogabeksanoyev06@gmail.com",
-        telefon: "+998 88 890-88-15",
-        password: "",
-      },
+      profile: JSON.parse(localStorage.getItem('employeeInfo')),
       confirmPassword: "",
       isChecked: false,
     };

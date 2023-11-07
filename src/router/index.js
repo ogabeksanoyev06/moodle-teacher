@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import TokenService from "@/service/TokenService";
 
 Vue.use(VueRouter);
 
@@ -228,15 +229,16 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   const isLogin = JSON.parse(localStorage.getItem("employeeInfo"));
+  let hasToken = !!TokenService.getToken();
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!isLogin) {
+    if (!isLogin&&!hasToken) {
       next("/landing-page");
       return;
     }
   }
 
   if (to.matched.some((record) => record.meta.guestOnly)) {
-    if (isLogin) {
+    if (isLogin&&hasToken) {
       next("/");
       return;
     }

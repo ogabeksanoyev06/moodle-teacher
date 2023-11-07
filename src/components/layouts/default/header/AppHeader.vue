@@ -87,13 +87,23 @@ export default {
       languageDropdown: false,
       accountDropdown: false,
       setLang: "O‘zbekcha",
-      employeeInfo:JSON.parse(localStorage.getItem('employeeInfo')).details
+      employeeInfo:JSON.parse(localStorage.getItem('employeeInfo'))
     };
   },
   methods: {
     logout(){
       localStorage.clear()
-      this.$router.push('/landing-page')
+      const newWindow = window.open('https://hemis.tfi.uz/dashboard/logout');
+      newWindow.onload = function() {
+        // Code to execute after the new tab content is fully loaded
+        setTimeout(function() {
+          window.location.href='http://localhost:8080';
+        }, 2000); // Tab ochilganidan 5 sekund so'ng
+      };
+
+      window.location.href='http://localhost:8080';
+
+      // this.$router.push('/landing-page')
     },
     hideLanguageDropdown() {
       this.languageDropdown = false;

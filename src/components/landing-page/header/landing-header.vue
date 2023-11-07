@@ -68,6 +68,7 @@
 </template>
 <script>
 import axios from "axios";
+import TokenService from "@/service/TokenService";
 
 
 export default {
@@ -103,7 +104,9 @@ export default {
     const code = this.$route.query.code;
     if(code){
       axios.get(`https://api.fastlms.uz/api/callback/${code}`).then((res) => {
-        localStorage.setItem('employeeInfo',JSON.stringify(res.data))
+
+        localStorage.setItem('employeeInfo',JSON.stringify(res.data.details))
+        TokenService.saveToken(res.data.token)
         this.$router.push({ name: 'home' });
         console.log(res);
       }).catch((err) => {
