@@ -1,13 +1,13 @@
 <template>
   <ValidationProvider
-    tag="div"
-    ref="validationInput"
-    class="input__holder"
-    :rules="rules"
-    :name="label ? label : placeholder"
-    :vid="vid"
-    v-slot="{ errors }"
-    :hideDetails="hideDetails"
+      tag="div"
+      ref="validationInput"
+      class="input__holder"
+      :rules="rules"
+      :name="label ? label : placeholder"
+      :vid="vid"
+      v-slot="{ errors }"
+      :hideDetails="hideDetails"
   >
     <div class="input__block" :class="disabled ? 'disabled' : ''">
       <label class="input__block-label">
@@ -19,21 +19,21 @@
           <div class="input__block-append">
             <slot name="append"></slot>
           </div>
-          <div class="input__block-append hide-password" @click="showPassword">
+          <div class="input__block-append hide-password">
             <slot name="hidePassword"></slot>
           </div>
           <input
-            ref="input"
-            :disabled="disabled"
-            :value="value"
-            @input="inputValue"
-            @keypress="keyPressValue"
-            v-bind="$attrs"
-            :type="type"
-            :maxlength="maxlength"
-            :placeholder="placeholder"
-            class="input__block-input"
-            :class="errors[0] ? 'error' : ''"
+              ref="input"
+              :disabled="disabled"
+              :value="value"
+              @input="inputValue"
+              @keypress="keyPressValue"
+              v-bind="$attrs"
+              :type="type"
+              :maxlength="maxlength"
+              :placeholder="placeholder"
+              class="input__block-input"
+              :class="errors[0] ? 'error' : ''"
           />
         </div>
         <div class="input__details" v-if="!hideDetails">
@@ -103,15 +103,6 @@ export default {
     },
     focus() {
       this.$refs.input.focus();
-    },
-    showPassword() {
-      // if (this.type === "password") {
-      //   this.type = "text";
-      //   this.btnText = "Hide Password";
-      // } else {
-      //   this.type = "password";
-      //   this.btnText = "Show Password";
-      // }
     },
   },
   mounted() {
