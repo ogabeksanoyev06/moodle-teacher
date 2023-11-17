@@ -11,9 +11,15 @@ import "./plugins/media/media-mixin";
 import "./plugins/mixins/mixin";
 import "./plugins/directives/click-outside";
 import http from "./plugins/axios";
+import Element from 'element-ui'
 
 Vue.config.productionTip = false;
+const styledText = '%cStop!%c';
+const style1 = 'color: red; font-weight: bold;font-size:50px';
 
+
+console.log(styledText, style1, '');
+Vue.use(Element)
 Vue.component("AppText", AppText);
 Vue.use(VueMask);
 Vue.use(Toast);

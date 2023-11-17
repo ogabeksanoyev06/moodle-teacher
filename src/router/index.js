@@ -21,6 +21,27 @@ const routes = [
         component: () => import("../views/site/home/index.vue"),
       },
       {
+        path: 'list/subject',
+        name: 'list-subject',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/list-subject.vue"
+            )
+      },
+      {
+        path: 'list/subject/view',
+        name: 'list-view',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/list-subject-view.vue"
+            )
+      },
+      {
+        path: 'list/subject/add',
+        name: 'list-add',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/list-subject-add.vue"
+            )
+      },
+      {
         path: "teacher/subject/topics",
         name: "subject-title",
         component: () =>

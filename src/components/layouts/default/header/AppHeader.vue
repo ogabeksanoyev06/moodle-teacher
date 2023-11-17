@@ -157,7 +157,7 @@ export default {
       accountDropdown: false,
       setLang: "O‘zbekcha",
       employeeInfo: JSON.parse(localStorage.getItem('employeeInfo')),
-      showModal: true
+      showModal: false
     };
   },
   methods: {
@@ -167,7 +167,7 @@ export default {
         axios.post("https://api.fastlms.uz/api/bigbluebutton/createroom/",{id:res.data.id}).then(()=>{
           axios.post("https://api.fastlms.uz/api/bigbluebutton/join/moderator/",{
            id:res.data.id,
-            username:"Jasurbek"
+            username:JSON.parse(localStorage.getItem('employeeInfo')).name
           }).then((res3)=>{
             console.log(res3)
             window.open(res3.data.url, '_blank');
@@ -190,10 +190,9 @@ export default {
       localStorage.clear()
       const newWindow = window.open('https://hemis.tfi.uz/dashboard/logout');
       newWindow.onload = function () {
-        // Code to execute after the new tab content is fully loaded
         setTimeout(function () {
           window.location.href = 'http://localhost:8080';
-        }, 2000); // Tab ochilganidan 5 sekund so'ng
+        }, 2000);
       };
 
       window.location.href = 'http://localhost:8080';
