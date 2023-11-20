@@ -11,12 +11,16 @@
       />
     </div>
     <div class="drop-downer">
-      <div class="downer-title">
-        Fayllar ro‘yxatini kiriting
+      <div class="first-section">
+        <div class="downer-title">
+          Fayllar ro‘yxatini kiriting
+        </div>
+
+        <button class="common-use-button">
+          Qo'shish <img src="/svg/plusWhite.svg" alt=""/>
+        </button>
       </div>
-      <button class="common-use-button">
-        Qo'shish <img src="/svg/plusWhite.svg" alt=""/>
-      </button>
+
       <div>
         <img src="/svg/down.svg" alt=""/>
       </div>
@@ -48,5 +52,36 @@
 import BaseInput from "@/components/shared-components/BaseInput.vue";
 </script>
 <style scoped lang="scss">
-
+.list-files{
+  .list-item{
+    padding: 12px 16px;
+    border-radius: 12px;
+    background:  #F8FAFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .item-name{
+      display: flex;
+      gap: 5px;
+    }
+    .action-buttons{
+      display: flex;
+      gap: 5px;
+    }
+  }
+}
+.drop-downer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 12px;
+  background:  #F8FAFF;
+  margin-bottom: 10px;
+  padding: 12px 17px;
+  .first-section{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
 </style>
