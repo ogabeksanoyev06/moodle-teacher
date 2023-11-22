@@ -6,19 +6,40 @@
     <div class="inner-title">
       <span>Fan nomi:</span>Soliq va Soliqqa tortish
     </div>
-    <router-link to="add">
-    <button class="add-lesson">
+    <button @click="showModal" class="add-lesson">
       Mavzu qo‘shish <img src="/svg/plus.svg" alt=""/>
     </button>
-    </router-link>
+    <div class="modal-custom" v-show="isOpenModal">
+      <div class="modal-custom-inner">
+        <div @click="closeModal" class="close">
+          <img src="/svg/exit.svg" alt=""/>
+        </div>
+        <div class="header-modal">
+          Mavzu yaratish
+        </div>
+        <form  @submit.prevent="createTitle">
+        <div class="body-modal container">
+
+            <base-input v-model="title" label="Mavzu nomi" placeholder="Mavzu nomi" rules="required" />
+
+        </div>
+        <div class="footer-modal container">
+          <button type="submit" class="common-use-button big-one">
+            Yaratish
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
     <div class="lesson-list">
-      <div class="lesson-list-item">
+
+      <div v-for="t in this.subjuects" :key="t" class="lesson-list-item">
         <div class="name">
           <div class="tr">
             1.
           </div>
           <div>
-            Soliq haqida
+{{t}}
           </div>
         </div>
         <div class="action">
@@ -29,255 +50,12 @@
                 >
             </el-switch>
           </div>
+          <router-link to="add">
           <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
+            Resurslar
+            <img src="/svg/upload.svg" alt=""/>
           </button>
-          <button class="common-use-button">
-            Topshiriqlar
-            <img src="/svg/subject.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Ko‘rish
-            <img src="/svg/view.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Dars xonasini yaratish
-            <img src="/svg/room.svg" alt=""/>
-          </button>
-        </div>
-      </div>
-      <div class="lesson-list-item">
-        <div class="name">
-          <div class="tr">
-            1.
-          </div>
-          <div>
-            Soliq haqida
-          </div>
-        </div>
-        <div class="action">
-          <div class="switcher">
-            <el-switch
-                v-model="value1"
-                active-color="#13ce66"
-            >
-            </el-switch>
-          </div>
-          <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Topshiriqlar
-            <img src="/svg/subject.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Ko‘rish
-            <img src="/svg/view.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Dars xonasini yaratish
-            <img src="/svg/room.svg" alt=""/>
-          </button>
-        </div>
-      </div>
-      <div class="lesson-list-item">
-        <div class="name">
-          <div class="tr">
-            1.
-          </div>
-          <div>
-            Soliq haqida
-          </div>
-        </div>
-        <div class="action">
-          <div class="switcher">
-            <el-switch
-                v-model="value1"
-                active-color="#13ce66"
-            >
-            </el-switch>
-          </div>
-          <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Topshiriqlar
-            <img src="/svg/subject.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Ko‘rish
-            <img src="/svg/view.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Dars xonasini yaratish
-            <img src="/svg/room.svg" alt=""/>
-          </button>
-        </div>
-      </div>
-      <div class="lesson-list-item">
-        <div class="name">
-          <div class="tr">
-            1.
-          </div>
-          <div>
-            Soliq haqida
-          </div>
-        </div>
-        <div class="action">
-          <div class="switcher">
-            <el-switch
-                v-model="value1"
-                active-color="#13ce66"
-            >
-            </el-switch>
-          </div>
-          <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Topshiriqlar
-            <img src="/svg/subject.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Ko‘rish
-            <img src="/svg/view.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Dars xonasini yaratish
-            <img src="/svg/room.svg" alt=""/>
-          </button>
-        </div>
-      </div>
-      <div class="lesson-list-item">
-        <div class="name">
-          <div class="tr">
-            1.
-          </div>
-          <div>
-            Soliq haqida
-          </div>
-        </div>
-        <div class="action">
-          <div class="switcher">
-            <el-switch
-                v-model="value1"
-                active-color="#13ce66"
-            >
-            </el-switch>
-          </div>
-          <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Topshiriqlar
-            <img src="/svg/subject.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Ko‘rish
-            <img src="/svg/view.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Dars xonasini yaratish
-            <img src="/svg/room.svg" alt=""/>
-          </button>
-        </div>
-      </div>
-      <div class="lesson-list-item">
-        <div class="name">
-          <div class="tr">
-            1.
-          </div>
-          <div>
-            Soliq haqida
-          </div>
-        </div>
-        <div class="action">
-          <div class="switcher">
-            <el-switch
-                v-model="value1"
-                active-color="#13ce66"
-            >
-            </el-switch>
-          </div>
-          <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Topshiriqlar
-            <img src="/svg/subject.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Ko‘rish
-            <img src="/svg/view.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Dars xonasini yaratish
-            <img src="/svg/room.svg" alt=""/>
-          </button>
-        </div>
-      </div>
-      <div class="lesson-list-item">
-        <div class="name">
-          <div class="tr">
-            1.
-          </div>
-          <div>
-            Soliq haqida
-          </div>
-        </div>
-        <div class="action">
-          <div class="switcher">
-            <el-switch
-                v-model="value1"
-                active-color="#13ce66"
-            >
-            </el-switch>
-          </div>
-          <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Topshiriqlar
-            <img src="/svg/subject.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Ko‘rish
-            <img src="/svg/view.svg" alt=""/>
-          </button>
-          <button class="common-use-button">
-            Dars xonasini yaratish
-            <img src="/svg/room.svg" alt=""/>
-          </button>
-        </div>
-      </div>
-      <div class="lesson-list-item">
-        <div class="name">
-          <div class="tr">
-            1.
-          </div>
-          <div>
-            Soliq haqida
-          </div>
-        </div>
-        <div class="action">
-          <div class="switcher">
-            <el-switch
-                v-model="value1"
-                active-color="#13ce66"
-            >
-            </el-switch>
-          </div>
-          <button class="common-use-button">
-            Tahrirlash
-            <img src="/svg/edit.svg" alt=""/>
-          </button>
+          </router-link>
           <button class="common-use-button">
             Topshiriqlar
             <img src="/svg/subject.svg" alt=""/>
@@ -297,10 +75,29 @@
 </div>
 </template>
 <script>
+import BaseInput from "@/components/shared-components/BaseInput.vue";
+
 export default {
+  components: {BaseInput},
   data() {
     return {
       value1: true,
+      isOpenModal: false,
+      title:'',
+      subjuects:[]
+    }
+  },
+  methods: {
+    showModal() {
+      this.isOpenModal = !this.isOpenModal
+    },
+    closeModal(){
+      this.isOpenModal = !this.isOpenModal
+    },
+    createTitle(){
+      this.subjuects.push(this.title)
+      this.closeModal()
+      this.title = ''
     }
   }
 };
@@ -361,6 +158,61 @@ export default {
         align-items: center;
         justify-content: center;
         gap: 5px;
+      }
+    }
+  }
+
+
+  .modal-custom {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+
+    .modal-custom-inner {
+      max-width: 600px;
+      width: 100%;
+      background: #fff;
+      border-radius: 24px;
+      position: relative;
+      .close{
+        position: absolute;
+        right: -20px;
+        top: -20px;
+        cursor: pointer;
+      }
+      .header-modal {
+        margin-bottom: 10px;
+        height: 82px;
+        border-radius: 24px;
+        background: linear-gradient(133deg, #008BF8 0.82%, #0043A7 99.18%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-rectangle, #FFF);
+        font-family: Manrope;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        letter-spacing: -0.4px;
+      }
+      .footer-modal{
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .big-one{
+        padding: 10px 20px;
       }
     }
   }
