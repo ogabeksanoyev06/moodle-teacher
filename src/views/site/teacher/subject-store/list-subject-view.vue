@@ -31,6 +31,62 @@
         </form>
       </div>
     </div>
+
+
+    <div class="modal-custom" v-show="isOpenModalBBB">
+      <div class="modal-custom-inner">
+        <div @click="closeModalBBB" class="close">
+          <img src="/svg/exit.svg" alt=""/>
+        </div>
+        <div class="header-modal">
+          Dars xona yaratish
+        </div>
+        <div class="container">
+          <form class="form-group">
+            <base-input
+                type="text"
+                vid="Konfrensiya nomi"
+                rules="required"
+                label="Konfrensiya nomi"
+                placeholder="Konfrensiya nomi"
+
+            />
+            <base-input
+                type="text"
+                label="Konfrensiya davomiyligi (ixtiyoriy)"
+                placeholder="Konfrensiya davomiyligi (ixtiyoriy)"
+
+            />
+            <base-input
+                type="text"
+                label="Konfrensiyada qatnashuvchilar soni (ixtiyoriy)"
+                placeholder="Konfrensiyada qatnashuvchilar soni (ixtiyoriy)"
+            />
+            <input type="checkbox" id="checkbox"  />
+            <label  for="checkbox" class="checkbox-label">
+              Dars yozib olinsinmi
+<!--              <span-->
+<!--                  style="margin-left: 10px"-->
+<!--                  class="checkbox-custom"-->
+<!--                  :class="{ checked: bbb.record }"-->
+<!--              >-->
+<!--                        <i v-if="bbb.record" class="fa fa-check"></i>-->
+<!--                      </span>-->
+
+            </label>
+            <div class="footer-modal container">
+              <button type="submit" class="common-use-button big-one">
+                Yaratish
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+      </div>
+    </div>
+
+
     <div class="lesson-list">
 
       <div v-for="t in this.subjuects" :key="t" class="lesson-list-item">
@@ -56,15 +112,17 @@
             <img src="/svg/upload.svg" alt=""/>
           </button>
           </router-link>
+          <router-link to="task/view">
           <button class="common-use-button">
             Topshiriqlar
             <img src="/svg/subject.svg" alt=""/>
           </button>
+          </router-link>
           <button class="common-use-button">
             Ko‘rish
             <img src="/svg/view.svg" alt=""/>
           </button>
-          <button class="common-use-button">
+          <button @click="showModalBBB" class="common-use-button">
             Dars xonasini yaratish
             <img src="/svg/room.svg" alt=""/>
           </button>
@@ -76,13 +134,16 @@
 </template>
 <script>
 import BaseInput from "@/components/shared-components/BaseInput.vue";
+import axios from "axios";
 
 export default {
   components: {BaseInput},
+  props: ['id'],
   data() {
     return {
       value1: true,
       isOpenModal: false,
+      isOpenModalBBB: false,
       title:'',
       subjuects:[]
     }
@@ -94,8 +155,27 @@ export default {
     closeModal(){
       this.isOpenModal = !this.isOpenModal
     },
+    showModalBBB() {
+      this.isOpenModalBBB = !this.isOpenModalBBB
+    },
+    closeModalBBB() {
+      this.isOpenModalBBB = !this.isOpenModalBBB
+    },
+    getBasicId(hemisId){
+      axios.post('https://api.fastlms.uz/api/teacher_get_basic_id/',{
+        teacher_id:hemisId
+      }).then((res)=>{
+        return res.teacher
+      })
+    },
     createTitle(){
-      this.subjuects.push(this.title)
+      axios.post('https://api.fastlms.uz/api/teacher_topics/',{
+        content_id_topic:this.getBasicId(625),
+        teacher_id:625,
+        name:this.title
+      }).then((res)=>{
+        console.log(res)
+      })
       this.closeModal()
       this.title = ''
     }

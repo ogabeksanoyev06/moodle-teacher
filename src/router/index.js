@@ -28,7 +28,7 @@ const routes = [
             )
       },
       {
-        path: 'list/subject/view',
+        path: 'list/subject/view/:id',
         name: 'list-view',
         component:()=>import(
             "@/views/site/teacher/subject-store/list-subject-view.vue"
@@ -39,6 +39,20 @@ const routes = [
         name: 'list-add',
         component:()=>import(
             "@/views/site/teacher/subject-store/list-subject-add.vue"
+            )
+      },
+      {
+        path: 'list/subject/task/view',
+        name: 'task-view',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/task-view.vue"
+            )
+      },
+      {
+        path: 'list/subject/task/group-add',
+        name: 'task-add-group',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/task-add-group.vue"
             )
       },
       {

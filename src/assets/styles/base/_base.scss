@@ -370,11 +370,9 @@ input:checked + .slider:before {
 //
 
 .el-input__inner {
-  border-radius: 15px !important;
   border: 1.15px solid #dedede !important;
   box-sizing: border-box;
   color: #dedede;
-  border-right-color: #fff !important;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   font-size: 12px !important;

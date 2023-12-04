@@ -1,14 +1,12 @@
-<script setup>
 
-</script>
 
 <template>
 <div class="container">
-  <div class="subject-list-card">
+  <div v-for="item in subjects" :key="item.id" class="subject-list-card">
     <div class="header-card">
-      <div class="title-card">Soliqlar va Soliqqa tortish </div>
+      <div class="title-card">{{item.content_id.subject_id.name}}</div>
       <div class="subtitle">
-        <span>Majburiy</span>|<span>150 soat</span>|<span>5.0 kredit</span>
+        <span>{{item.content_id.subject_id.subjectgroup.name}}</span> | <span>{{item.content_id.curriculum_id.markingsystem.gpa_limit}}</span>
       </div>
     </div>
     <div class="body-card">
@@ -18,7 +16,7 @@
         </div>
         <div class="info-section">
           <div class="tag">
-            31
+            {{item.content_id.topic_count}}
           </div>
           <div class="info">
             <img width="13" height="13" src="/svg/amountLecture.svg" alt=""/>
@@ -27,31 +25,31 @@
       </div>
       <div class='card-body-section'>
         <div class="title-section">
-          Maruza soni
+          Video darsliklar
         </div>
         <div class="info-section">
           <div class="tag">
-            31
+            {{item.content_id.video_count}}
           </div>
           <div class="info">
-            <img width="13" height="13" src="/svg/amountLecture.svg" alt=""/>
+            <img width="13" height="13" src="/svg/vidio.svg" alt=""/>
           </div>
         </div>
       </div>
       <div class='card-body-section'>
         <div class="title-section">
-          Maruza soni
+          Topshiriqlar soni
         </div>
         <div class="info-section">
           <div class="tag">
-            31
+            {{ item.content_id.task_count}}
           </div>
           <div class="info">
-            <img width="13" height="13" src="/svg/amountLecture.svg" alt=""/>
+            <img width="13" height="13" src="/svg/user.svg" alt=""/>
           </div>
         </div>
       </div>
-      <router-link to="subject/view">
+      <router-link :to="{name:'list-view',params:{id:item.id}}" >
       <div class="footer-card">
 
         <button class="button-card">
@@ -64,7 +62,32 @@
   </div>
 </div>
 </template>
+<script >
 
+
+
+
+import axios from "axios";
+
+export default {
+  data(){
+    return{
+      subjects:[]
+    }
+  },
+  methods:{
+    getSubjects(){
+      axios.post('https://api.fastlms.uz/api/teacher_contents/',{teacher_id:625}).then((res)=>{
+        this.subjects=res.data.result
+        console.log(res)
+      })
+    }
+  },
+  mounted() {
+    this.getSubjects()
+  }
+}
+</script>
 <style scoped lang="scss">
 .subject-list-card{
   background: #008BF8;
