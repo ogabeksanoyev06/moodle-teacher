@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <router-link :to="{name:'list-view',params:{id:item.id}}" >
+      <router-link :to="{name:'list-view',params:{id:item.content_id.id}}" >
       <div class="footer-card">
 
         <button class="button-card">

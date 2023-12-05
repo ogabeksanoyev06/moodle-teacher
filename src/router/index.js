@@ -32,7 +32,8 @@ const routes = [
         name: 'list-view',
         component:()=>import(
             "@/views/site/teacher/subject-store/list-subject-view.vue"
-            )
+            ),
+        props:true
       },
       {
         path: 'list/subject/add',

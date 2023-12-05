@@ -89,22 +89,21 @@
 
     <div class="lesson-list">
 
-      <div v-for="t in this.subjuects" :key="t" class="lesson-list-item">
+      <div v-for="t in this.subjuects" :key="t.id" class="lesson-list-item">
         <div class="name">
           <div class="tr">
             1.
           </div>
           <div>
-{{t}}
+{{t.name}}
           </div>
         </div>
         <div class="action">
           <div class="switcher">
             <el-switch
-                v-model="value1"
+                v-model="t.status_action"
                 active-color="#13ce66"
-                >
-            </el-switch>
+            ></el-switch>
           </div>
           <router-link to="add">
           <button class="common-use-button">
@@ -145,8 +144,18 @@ export default {
       isOpenModal: false,
       isOpenModalBBB: false,
       title:'',
-      subjuects:[]
+      subjuects:[],
+      teacher:''
     }
+  },
+  mounted() {
+    axios.post('https://api.fastlms.uz/api/teacher_get_basic_id/',{
+      teacher_id:625
+    }).then((res)=>{
+      console.log(res.data.teacher)
+      this.teacher= res.data.teacher
+    })
+    this.getSubjects()
   },
   methods: {
     showModal() {
@@ -161,22 +170,26 @@ export default {
     closeModalBBB() {
       this.isOpenModalBBB = !this.isOpenModalBBB
     },
-    getBasicId(hemisId){
-      axios.post('https://api.fastlms.uz/api/teacher_get_basic_id/',{
-        teacher_id:hemisId
+    getSubjects(){
+      axios.post("https://api.fastlms.uz/api/teacher_topics/",{
+        teacher_id:625,
+        content_id_topic:this.id
       }).then((res)=>{
-        return res.teacher
+          this.subjuects=res.data.result
+        console.log(res)
       })
     },
     createTitle(){
-      axios.post('https://api.fastlms.uz/api/teacher_topics/',{
-        content_id_topic:this.getBasicId(625),
+      console.log(this.id)
+      axios.post('https://api.fastlms.uz/api/teacher_topic/add/',{
+        content_id_topic:this.id,
         teacher_id:625,
         name:this.title
       }).then((res)=>{
         console.log(res)
+        this.closeModal()
+        this.getSubjects()
       })
-      this.closeModal()
       this.title = ''
     }
   }
