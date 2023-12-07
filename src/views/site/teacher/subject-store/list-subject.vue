@@ -1,5 +1,3 @@
-
-
 <template>
 <div class="container">
   <div v-for="item in subjects" :key="item.id" class="subject-list-card">
@@ -70,6 +68,7 @@
 import axios from "axios";
 
 export default {
+  name:'List-subject',
   data(){
     return{
       subjects:[]
