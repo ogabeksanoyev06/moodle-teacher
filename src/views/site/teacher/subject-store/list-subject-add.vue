@@ -22,17 +22,17 @@
       </div>
     </div>
     <div class="list-files">
-      <div class="list-item">
+      <div v-for="temp in files" :key="temp" class="list-item">
         <div class="item-name">
-          <div>
+          <div style="cursor: pointer" @click="download(temp.file_file)">
             <img src="/svg/file.svg" alt=""/>
           </div>
           <div class="item-name-in">
-            Mavzu : Soliq ishi.pdf
+            Mavzu : {{temp.name}}
           </div>
         </div>
         <div class="action-buttons">
-          <button class="common-use-button-red">
+          <button @click="deleteFile(temp.id)" class="common-use-button-red">
             Delete <img src="/svg/delete.svg" alt=""/>
           </button>
         </div>
@@ -54,13 +54,13 @@
       </div>
     </div>
     <div class="list-files">
-      <div class="list-item">
-        <div class="item-name">
-          <div>
+      <div v-for="temp in videos" :key="temp"  class="list-item">
+        <div  class="item-name">
+          <div style="cursor: pointer" @click="openVid(temp.vide_file)">
             <img src="/svg/video.svg" alt=""/>
           </div>
           <div class="item-name-in">
-            Mavzu : Soliq ishi.pdf
+            Mavzu : {{temp.name}}
           </div>
         </div>
         <div class="action-buttons">
@@ -70,17 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-line">
-      <router-link to="/list/subject/view">
-      <button class="common-use-button black-one">
-        <img src="/svg/back.svg" alt=""/>
-        Orqaga
-      </button>
-      </router-link>
-      <button class="common-use-button big-one">
-        Saqlash
-      </button>
-    </div>
+
 
 
     <div class="modal-custom" v-show="isOpenModal">
@@ -124,7 +114,7 @@
         <div class="header-modal">
           Vidio dars yuklash
         </div>
-        <form @submit.prevent="createTitle">
+        <form @submit.prevent="createVideo">
           <div class="body-modal container">
 
             <base-input v-model="vidio.name" label="Vidio nomi" placeholder="Vidio  nomi" rules="required"/>
@@ -132,7 +122,7 @@
                 class="upload-demo"
                 ref="upload"
                 action="https://jsonplaceholder.typicode.com/posts/"
-                :on-change="handleFileChange"
+                :on-change="handleFileChangeVidio"
                 :limit="1"
                 accept="video/*"
               :auto-upload="false">
@@ -149,6 +139,27 @@
         </form>
       </div>
     </div>
+    <div class="modal-custom" v-show="onOpenVid">
+      <div class="modal-custom-inner">
+        <div @click="onCloseVid" class="close">
+          <img src="/svg/exit.svg" alt=""/>
+        </div>
+        <div class="header-modal">
+          Yuklangan video
+        </div>
+        <template>
+          <video
+              ref="videoPlayer"
+              width="100%"
+              height="300"
+              :src="`https://api.fastlms.uz${this.videoRef}`"
+              controls
+              preload="auto"
+              poster="path-to-your-poster.jpg">
+          </video>
+        </template>
+      </div>
+    </div>
 
   </div>
 
@@ -156,13 +167,19 @@
 
 <script>
 import BaseInput from "@/components/shared-components/BaseInput.vue";
+import axios from "axios";
 
 export default {
   components: {BaseInput},
+  props: ['id'],
   data() {
     return {
+      videoRef:'',
       isOpenModal: false,
       isOpenModalVid: false,
+      onOpenVid:false,
+      videos:[],
+      files:[],
       resurce: {
         name: '',
         file: null
@@ -174,6 +191,64 @@ export default {
     }
   },
   methods: {
+    deleteFile(fileId){
+      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/file/${fileId}/625/${this.id}`).then((res)=>{
+        console.log(res)
+      })
+    },
+    download(file){
+      axios.get(`https://api.fastlms.uz${file}`).then((res)=>{
+        this.handleDownloadResponse(res, file)
+      })
+    },
+    handleDownloadResponse(response, file) {
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = file.split('/').pop();
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(link.href);
+    },
+    onCloseVid(){
+      this.$refs.videoPlayer.pause();
+      this.onOpenVid=false
+    },
+    openVid(ref){
+      this.videoRef = ref
+      this.onOpenVid=true
+    },
+    createTitle(){
+      const formData= new FormData();
+      formData.append('name',this.resurce.name)
+      formData.append('files',this.resurce.file)
+      formData.append('topic_id',this.id)
+      formData.append('teacher_id',625)
+
+      axios.post('https://api.fastlms.uz/api/teacher_topic/add/file/',formData,{
+        headers:{
+            'Content-type':'multipart/form-data'
+        }
+      }).then((res)=>{
+        console.log(res)
+      })
+    },
+    createVideo(){
+      const formData= new FormData();
+      formData.append('name',this.vidio.name)
+      formData.append('video',this.vidio.vidio)
+      formData.append('topic_id',this.id)
+      formData.append('teacher_id',625)
+
+      axios.post('https://api.fastlms.uz/api/teacher_topic/add/video/',formData,{
+        headers:{
+            'Content-type':'multipart/form-data'
+        }
+      }).then((res)=>{
+        console.log(res)
+      })
+    },
     showModal() {
       this.isOpenModal = !this.isOpenModal
     },
@@ -186,12 +261,29 @@ export default {
     closeModalVid() {
       this.isOpenModalVid = !this.isOpenModalVid
     },
+    getResurces(){
+      axios.get(`https://api.fastlms.uz/api/teacher_topic/view/?topic_id=${this.id}&teacher_id=625`).then((res)=>{
+        this.videos=res.data.result.topic_videos
+        this.files=res.data.result.topic_files
+        console.log(res)
+      })
+    },
     handleFileChange(file, fileList) {
       console.log('aaa')
       console.log('File selected:', file);
       console.log(fileList)
-      this.resurce.file = file
+      this.resurce.file = file.raw
     },
+    handleFileChangeVidio(file, fileList) {
+      console.log('aaa')
+      console.log('File selected:', file);
+      console.log(fileList)
+      this.vidio.vidio = file.raw
+    },
+  },
+  mounted() {
+
+    this.getResurces()
   }
 }
 </script>
@@ -257,16 +349,19 @@ export default {
 
   .modal-custom-inner {
     max-width: 600px;
+    max-height: 500px;
     width: 100%;
     background: #fff;
     border-radius: 24px;
     position: relative;
+    overflow: hidden;
 
     .close {
       position: absolute;
-      right: -20px;
-      top: -20px;
+      right: 0;
+      top: 0;
       cursor: pointer;
+      z-index: 999 !important;
     }
 
     .header-modal {

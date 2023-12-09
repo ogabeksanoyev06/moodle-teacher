@@ -36,11 +36,12 @@ const routes = [
         props:true
       },
       {
-        path: 'list/subject/add',
+        path: 'list/subject/add/:id',
         name: 'list-add',
         component:()=>import(
             "@/views/site/teacher/subject-store/list-subject-add.vue"
-            )
+            ),
+        props: true
       },
       {
         path: 'list/subject/task/view',

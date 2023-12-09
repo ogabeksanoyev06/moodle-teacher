@@ -105,7 +105,7 @@
                 active-color="#13ce66"
             ></el-switch>
           </div>
-          <router-link to="add">
+          <router-link :to="{name:'list-add',params:{id:t.id}}">
           <button class="common-use-button">
             Resurslar
             <img src="/svg/upload.svg" alt=""/>
