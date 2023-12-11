@@ -77,7 +77,7 @@
           </div>
         </div>
       </div>
-      <router-link :to="{name:'list-view',params:{id:item.content_id.id}}" >
+      <router-link :to="{name:'list-view',params:{id:item.content_id.id,nextId:item.id}}" >
       <div class="footer-card">
 
         <button class="button-card">

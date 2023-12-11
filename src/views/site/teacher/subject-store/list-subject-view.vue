@@ -139,7 +139,8 @@ import axios from "axios";
 
 export default {
   components: {BaseInput},
-  props: ['id'],
+  props: ['id','nextId'],
+
   data() {
     return {
       value1: true,
@@ -152,9 +153,11 @@ export default {
   },
   mounted() {
     axios.post('https://api.fastlms.uz/api/teacher_get_basic_id/',{
-      teacher_id:625
+      teacher_id:625,
+
     }).then((res)=>{
       console.log(res.data.teacher)
+
       this.teacher= res.data.teacher
     })
     this.getSubjects()
@@ -183,7 +186,8 @@ export default {
     getSubjects(){
       axios.post("https://api.fastlms.uz/api/teacher_topics/",{
         teacher_id:625,
-        content_id_topic:this.id
+        content_topic_id:this.id,
+        content_teacher_connect:this.nextId
       }).then((res)=>{
           this.subjuects=res.data.result
         console.log(res)

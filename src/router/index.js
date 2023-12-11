@@ -28,7 +28,7 @@ const routes = [
             )
       },
       {
-        path: 'list/subject/view/:id',
+        path: 'list/subject/view/:id/:nextId',
         name: 'list-view',
         component:()=>import(
             "@/views/site/teacher/subject-store/list-subject-view.vue"
