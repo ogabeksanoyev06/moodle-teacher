@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="action-buttons">
-          <button class="common-use-button-red">
+          <button @click="deleteVideo(temp.id)" class="common-use-button-red">
             Delete <img src="/svg/delete.svg" alt=""/>
           </button>
         </div>
@@ -155,7 +155,7 @@
               :src="`https://api.fastlms.uz${this.videoRef}`"
               controls
               preload="auto"
-              poster="path-to-your-poster.jpg">
+              poster="/svg/prewiew.svg">
           </video>
         </template>
       </div>
@@ -192,8 +192,15 @@ export default {
   },
   methods: {
     deleteFile(fileId){
-      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/file/${fileId}/625/${this.id}`).then((res)=>{
-        console.log(res)
+      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/file/?pk=${fileId}&teacher_id=625&topic_id=${this.id}`).then(()=>{
+        this.successNotification("File o'chirildi!");
+        this.getResurces()
+      })
+    },
+    deleteVideo(fileId){
+      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/video/?pk=${fileId}&teacher_id=625&topic_id=${this.id}`).then(()=>{
+        this.successNotification("Video file o'chirildi!");
+        this.getResurces()
       })
     },
     download(file){
@@ -230,8 +237,10 @@ export default {
         headers:{
             'Content-type':'multipart/form-data'
         }
-      }).then((res)=>{
-        console.log(res)
+      }).then(()=>{
+        this.successNotification('Resurs file yaratildi')
+        this.closeModal()
+        this.getResurces()
       })
     },
     createVideo(){
@@ -245,8 +254,10 @@ export default {
         headers:{
             'Content-type':'multipart/form-data'
         }
-      }).then((res)=>{
-        console.log(res)
+      }).then(()=>{
+        this.successNotification('Resurs file yaratildi')
+        this.closeModalVid()
+        this.getResurces()
       })
     },
     showModal() {

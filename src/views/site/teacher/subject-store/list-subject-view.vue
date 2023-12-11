@@ -20,7 +20,7 @@
         <form  @submit.prevent="createTitle">
         <div class="body-modal container">
 
-            <base-input v-model="title" label="Mavzu nomi" placeholder="Mavzu nomi" rules="required" />
+            <base-input   v-model="title" label="Mavzu nomi" placeholder="Mavzu nomi" rules="required" />
 
         </div>
         <div class="footer-modal container">
@@ -89,10 +89,10 @@
 
     <div class="lesson-list">
 
-      <div v-for="t in this.subjuects" :key="t.id" class="lesson-list-item">
+      <div v-for="(t, index) in this.subjuects" :key="t.id" class="lesson-list-item">
         <div class="name">
           <div class="tr">
-            1.
+            {{index+1}}.
           </div>
           <div>
 {{t.name}}
@@ -101,9 +101,11 @@
         <div class="action">
           <div class="switcher">
             <el-switch
-                v-model="t.status_action"
+                v-model="t.in_progress"
                 active-color="#13ce66"
+                @change="onChangeSwitch(t, $event)"
             ></el-switch>
+
           </div>
           <router-link :to="{name:'list-add',params:{id:t.id}}">
           <button class="common-use-button">
@@ -158,6 +160,14 @@ export default {
     this.getSubjects()
   },
   methods: {
+    onChangeSwitch(newValue, item) {
+      axios.put(`https://api.fastlms.uz/api/teacher_topic/change/${newValue.id}/`).then((res)=>{
+        console.log(res)
+      })
+      console.log('Switch changed to: ', newValue);
+      console.log('Item: ', item);
+      // Additional logic to handle the switch change
+    },
     showModal() {
       this.isOpenModal = !this.isOpenModal
     },

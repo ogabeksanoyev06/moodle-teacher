@@ -112,3 +112,8 @@ export default {
   },
 };
 </script>
+<style>
+.input__block-label{
+  width: 100% !important;
+}
+</style>

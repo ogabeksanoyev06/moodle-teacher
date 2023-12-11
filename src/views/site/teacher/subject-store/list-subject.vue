@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container list-subjects">
   <div v-for="item in subjects" :key="item.id" class="subject-list-card">
     <div class="header-card">
       <div class="title-card">{{item.content_id.subject_id.name}}</div>
@@ -8,6 +8,36 @@
       </div>
     </div>
     <div class="body-card">
+      <div class='card-body-section'>
+        <div class="title-section">
+          Til
+        </div>
+        <div class="info-section">
+          <div class="tag">
+            {{item.group_lang.name}}
+          </div>
+
+        </div>
+      </div>
+      <div class='card-body-section'>
+        <div class="title-section">
+          Guruhlar
+        </div>
+        <div class="info-section">
+          <el-tooltip class="item" effect="dark"  placement="top">
+            <div slot="content">
+              <div style="margin-bottom: 10px" v-for="group in item.group_by" :key="group.id" >
+              {{group.name}}
+            </div>
+            </div>
+            <div style="cursor: pointer" class="tag">
+              ....
+            </div>
+          </el-tooltip>
+
+
+        </div>
+      </div>
       <div class='card-body-section'>
         <div class="title-section">
           Maruza soni
@@ -88,6 +118,12 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.list-subjects{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+
+}
 .subject-list-card{
   background: #008BF8;
   max-width: 281px;
