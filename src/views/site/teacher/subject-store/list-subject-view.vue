@@ -186,7 +186,7 @@ export default {
     getSubjects(){
       axios.post("https://api.fastlms.uz/api/teacher_topics/",{
         teacher_id:625,
-        content_topic_id:this.id,
+        content_id_topic:this.id,
         content_teacher_connect:this.nextId
       }).then((res)=>{
           this.subjuects=res.data.result
@@ -198,7 +198,8 @@ export default {
       axios.post('https://api.fastlms.uz/api/teacher_topic/add/',{
         content_id_topic:this.id,
         teacher_id:625,
-        name:this.title
+        name:this.title,
+        content_teacher_connect:this.nextId
       }).then((res)=>{
         console.log(res)
         this.closeModal()
