@@ -164,7 +164,13 @@ export default {
   },
   methods: {
     onChangeSwitch(newValue, item) {
-      axios.put(`https://api.fastlms.uz/api/teacher_topic/change/${newValue.id}/`).then((res)=>{
+      axios.post(`https://api.fastlms.uz/api/teacher_topic/active/`,{
+        teacher_id:625,
+        content_id_topic:this.id,
+        content_teacher_connect:this.nextId,
+        topic_id:newValue.id
+      }).then((res)=>{
+        this.getSubjects()
         console.log(res)
       })
       console.log('Switch changed to: ', newValue);
