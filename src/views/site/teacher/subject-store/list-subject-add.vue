@@ -204,20 +204,27 @@ export default {
       })
     },
     download(file){
-      axios.get(`https://api.fastlms.uz${file}`).then((res)=>{
-        this.handleDownloadResponse(res, file)
-      })
+      axios.get(`https://api.fastlms.uz${file}`, { responseType: 'blob' }) // Set responseType to 'blob'
+          .then((res) => {
+            this.handleDownloadResponse(res, file)
+          })
+          .catch((err) => {
+            console.error(err);
+          });
     },
+
     handleDownloadResponse(response, file) {
       const blob = new Blob([response.data], { type: response.headers['content-type'] });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.download = file.split('/').pop();
+      const filename = file.split('/').pop();
+      link.download = filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(link.href);
     },
+
     onCloseVid(){
       this.$refs.videoPlayer.pause();
       this.onOpenVid=false

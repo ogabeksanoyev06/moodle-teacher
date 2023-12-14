@@ -163,7 +163,7 @@ export default {
     this.getSubjects()
   },
   methods: {
-    onChangeSwitch(newValue, item) {
+    onChangeSwitch(newValue) {
       axios.post(`https://api.fastlms.uz/api/teacher_topic/active/`,{
         teacher_id:625,
         content_id_topic:this.id,
@@ -173,9 +173,6 @@ export default {
         this.getSubjects()
         console.log(res)
       })
-      console.log('Switch changed to: ', newValue);
-      console.log('Item: ', item);
-      // Additional logic to handle the switch change
     },
     showModal() {
       this.isOpenModal = !this.isOpenModal
