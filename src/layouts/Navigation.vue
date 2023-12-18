@@ -30,6 +30,9 @@
                   <span class="user-name text-bold-600">
                     {{this.name}}
                   </span>
+                  <span style="font-size: 15px">
+                    O'qituvchi
+                  </span>
                 </div>
                 <span>
                   <img
@@ -78,10 +81,11 @@ export default {
   },
   methods: {
     logout() {
+      this.$router.push({ name: "landing-page" });
       TokenService.removeToken();
       TokenService.removeRefreshToken();
       localStorage.removeItem("staffId");
-      this.$router.push({ name: "login" });
+      window.open('https://hemis.tfi.uz/dashboard/logout')
     },
   },
   created() {},

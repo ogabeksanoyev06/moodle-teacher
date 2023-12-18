@@ -44,18 +44,28 @@ const routes = [
         props: true
       },
       {
-        path: 'list/subject/task/view',
+        path: 'list/subject/task/view/:id',
         name: 'task-view',
         component:()=>import(
             "@/views/site/teacher/subject-store/task-view.vue"
-            )
+            ),
+        props: true
       },
       {
-        path: 'list/subject/task/group-add',
+        path: 'list/subject/task/group-add/:topic_id',
         name: 'task-add-group',
         component:()=>import(
             "@/views/site/teacher/subject-store/task-add-group.vue"
-            )
+            ),
+        props: true
+      },
+      {
+        path: 'list/subject/task/student-add/:topic_id',
+        name: 'task-add-student',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/task-add-student.vue"
+            ),
+        props: true
       },
       {
         path: "teacher/subject/topics",

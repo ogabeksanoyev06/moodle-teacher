@@ -1,6 +1,4 @@
-<script setup>
 
-</script>
 
 <template>
   <div>
@@ -9,11 +7,13 @@
         Topshiriq yaratish
       </div>
       <div class="right">
+        <router-link :to="{name:'task-add-student',params:{topic_id:this.id}}">
         <button class="common-use-button">
           Talabalar uchun
           <img src="/svg/plusWhite.svg" alt=""/>
         </button>
-        <router-link to="group-add">
+        </router-link>
+        <router-link :to="{name:'task-add-group',params:{topic_id:this.id}}">
         <button class="common-use-button">
           Guruhlar kesimida
           <img src="/svg/plusWhite.svg" alt=""/>
@@ -44,7 +44,16 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  props:['id'],
+  data(){
+    return{
 
+    }
+  }
+}
+</script>
 <style scoped lang="scss">
 .head-add-buttons {
   display: flex;

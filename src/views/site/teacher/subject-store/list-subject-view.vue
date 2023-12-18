@@ -113,7 +113,7 @@
             <img src="/svg/upload.svg" alt=""/>
           </button>
           </router-link>
-          <router-link to="task/view">
+          <router-link :to="{name:'task-view',params:{id:t.id}}">
           <button class="common-use-button">
             Topshiriqlar
             <img src="/svg/subject.svg" alt=""/>
