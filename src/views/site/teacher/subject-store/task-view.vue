@@ -23,18 +23,18 @@
     </div>
     <div class="list-name">Topshiriqlar ro‘yxati</div>
     <div class="body-list">
-      <div class="body-list-item">
+      <div v-for="(item,index) in this.tasks" :key="index" class="body-list-item">
         <div class="left">
-          1.Soliq haqida nimani bilasiz
+          {{index+1}}.{{item.name}}
         </div>
         <div class="right">
           <div class="start-date">
             <span>boshlanish vaqti</span>
-            5 noyabr 12:00
+            {{getYear(item.start_date)}}
           </div>
           <div class="end-date">
             <span>tugash vaqti</span>
-            5 noyabr 12:00
+           {{getYear(item.end_date)}}
           </div>
           <div class="eye">
             <img src="/svg/eye.svg" alt="">
@@ -45,12 +45,35 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   props:['id'],
   data(){
     return{
-
+      tasks:[],
     }
+  },
+  methods:{
+    getTasks(){
+    axios.get(`https://api.fastlms.uz/api/tasks/view/?topic_id=${this.id}&teacher_id=625`).then((res)=>{
+      this.tasks=res.data.result
+    })
+    },
+    getYear(time) {
+  const date = new Date(time);
+  const pad = (num) => num.toString().padStart(2, '0');
+  const day = pad(date.getDate());
+  const month = pad(date.getMonth() + 1); // Adding 1 because getMonth() returns 0-11
+  const year = date.getFullYear();
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+  return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+}
+  },
+  mounted() {
+    this.getTasks()
   }
 }
 </script>

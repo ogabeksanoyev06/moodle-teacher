@@ -25,7 +25,7 @@
         </el-form-item>
       </div>
       <div class="form-item">
-        <el-form-item label="Guruh tanlash" >
+        <el-form-item label="Guruh tanlash" prop="task_group" >
           <el-select style="width: 100%" @change="getStudent" v-model="tempGroup" clearable placeholder="Select">
             <el-option
                 v-for="item in optionTable"
@@ -43,7 +43,7 @@
         </el-form-item>
       </div>
       <div class="form-item">
-       <el-form-item label="Muddatni kiriting">
+       <el-form-item label="Muddatni kiriting" prop="dateTimer">
         <el-date-picker
             style="width: 100%"
             v-model="task.dateTimer"
@@ -57,7 +57,7 @@
 
       </div>
       <div class="form-item-small">
-        <el-form-item label="Topshiriq fayllari">
+        <el-form-item label="Topshiriq fayllari" prop="task_files">
         <el-upload
             ref="video"
             class="upload-demo"
@@ -103,7 +103,7 @@
         </div>
       </div>
 
-      <button class="common-use-button"  @click="submitForm">Saqlash</button>
+      <button class="common-use-button"  @click="createTask('task',$event)">Saqlash</button>
     </el-form>
   </div>
 </template>
@@ -125,7 +125,7 @@ export default {
         task_id_type: '',
         score: '',
         teacher_id: 625,
-        task_check: false,
+        task_check: true,
         task_group: {},
         task_files: []
       },
@@ -133,7 +133,31 @@ export default {
       tableData: [],
       multipleSelection: [],
       options: [],
-      optionTable: []
+      optionTable: [],
+      rules: {
+        name: [
+          { required: true, message: 'Topshiriq nomini kiritish majburiy', trigger: 'blur' }
+        ],
+        comment: [
+          { required: true, message: "Bo'sh bo'lishi mumkin emas", trigger: 'blur' }
+        ],
+        task_id_type: [
+          {  required: true, message: 'Bo\'sh bo\'lishi mumkin emas', trigger: 'blur' }
+        ],
+        score: [
+          { required: true, message: 'Bo\'sh bo\'lishi mumkin emas', trigger: 'blur' }
+        ],
+        task_group: [
+          { required: true, message: 'Bo\'sh bo\'lishi mumkin emas', trigger: 'change' }
+        ],
+        dateTimer: [
+          { required: true, message: 'Bo\'sh bo\'lishi mumkin emas', trigger: 'change' }
+        ],
+        task_files: [
+          { required: true, message: 'Bo\'sh bo\'lishi mumkin emas', trigger: 'blur' }
+        ]
+      }
+
     };
   },
   methods: {
@@ -141,6 +165,8 @@ export default {
       axios.get(`https://api.fastlms.uz/api/tasks/groups/?topic_id=${this.topic_id}&teacher_id=625`).then((res) => {
         this.optionTable = res.data.result;
         console.log(res)
+
+
       })
     },
     getOptions() {
@@ -201,18 +227,9 @@ export default {
         }
       });
     },
-    submitForm() {
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     this.createTask()
-      //   } else {
-      //     console.log('error submit!!');
-      //     return false;
-      //   }
-      // });},
-this.createTask()
-    },
-    createTask() {
+    createTask(formName,e) {
+      e.preventDefault()
+      const temp = this.tempStudents.map(row => row.id);
       const formData = new FormData();
       formData.append('name', this.task.name)
       formData.append('comment', this.task.comment)
@@ -221,19 +238,38 @@ this.createTask()
       formData.append('topic_id_task', this.task.topic_id_task)
       formData.append('task_check', this.task.task_check)
       formData.append('name', this.task.name)
-      formData.append('task_group', this.task.task_group)
+      formData.append('task_student', JSON.stringify(temp))
       formData.append('task_files', this.task.task_files)
       formData.append('teacher_id', this.task.teacher_id)
       formData.append('start_date', this.formatDateString(this.task.dateTimer[0]))
       formData.append('end_date', this.formatDateString(this.task.dateTimer[1]))
-      formData.append('task_student', JSON.stringify({}))
-      axios.post('https://api.fastlms.uz/api/tasks/create/', formData, {
-        headers: {
-          'Content-type': 'multipart/form-data'
+      formData.append('task_group', JSON.stringify({}))
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          axios.post('https://api.fastlms.uz/api/tasks/create/', formData, {
+            headers: {
+              'Content-type': 'multipart/form-data'
+            }
+          }).then((res) => {
+            console.log(res)
+            this.$refs[formName].resetFields();
+            this.notificationMessage("Topshiriq muofaqiyatli qo'shildi!", "success");
+            this.tempStudents=[]
+            this.tableData=[]
+            this.tempGroup=''
+          }).catch((err)=>{
+            console.log(err)
+            this.notificationMessage(err.response.data.message[0], "error");
+          })
+        } else {
+          console.log('error submit!!');
+          return false;
         }
-      }).then((res) => {
-        console.log(res)
-      })
+      });
+
+
+
+
     }
   },
   mounted() {

@@ -4,8 +4,8 @@ import router from "./router";
 import store from "./store";
 import AppText from "./components/shared-components/AppText";
 import VueMask from "v-mask";
-import Toast from "vue-toastification";
-import "vue-toastification/dist/index.css";
+import Toast from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
 import "./assets/styles/main.scss";
 import "./plugins/media/media-mixin";
 import "./plugins/mixins/mixin";
@@ -34,3 +34,22 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount("#app");
+
+
+Vue.mixin({
+  data() {
+    return {};
+  },
+  methods: {
+    isEmptyObject(object) {
+      return Object.keys(object).length !== 0;
+    },
+    notificationMessage(message, type) {
+      this.$toast.open({
+        message: message,
+        type: type,
+        position: "top-right",
+      });
+    },
+  },
+});
