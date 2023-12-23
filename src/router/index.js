@@ -67,6 +67,15 @@ const routes = [
             ),
         props: true
       },
+       
+  {
+        path: 'lessons/:id/:nextId',
+        name: 'lessons',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/lessons.vue"
+            ),
+        props: true
+      },
       {
         path: "teacher/subject/topics",
         name: "subject-title",
@@ -260,6 +269,7 @@ const routes = [
         name: "dashboard-profile",
         component: () => import("../views/cabinet/profile.vue"),
       },
+      
     ],
   },
 ];

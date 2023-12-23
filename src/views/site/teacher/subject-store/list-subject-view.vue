@@ -32,7 +32,6 @@
       </div>
     </div>
 
-
     <div class="modal-custom" v-show="isOpenModalBBB">
       <div class="modal-custom-inner">
         <div @click="closeModalBBB" class="close">
@@ -86,12 +85,34 @@
       </div>
     </div>
 
+    <div class="modal-custom" v-show="isOpenEdit">
+      <div class="modal-custom-inner">
+        <div @click="closeModalEdit" class="close">
+          <img src="/svg/exit.svg" alt=""/>
+        </div>
+        <div class="header-modal">
+          Mavzuni tahrirlash
+        </div>
+        <form  @submit.prevent="edit">
+          <div class="body-modal container">
 
+            <base-input   v-model="changedTitle" label="Mavzu nomi" placeholder="Mavzu nomi" rules="required" />
+
+          </div>
+          <div class="footer-modal container">
+            <button type="submit" class="common-use-button big-one">
+              Tahrirlash
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
     <div class="lesson-list">
 
       <div v-for="(t, index) in this.subjuects" :key="t.id" class="lesson-list-item">
         <div class="name">
           <div class="tr">
+            <img @click="showModalEdit(t.id)" style="cursor: pointer" src="/svg/editable.svg"/>
             {{index+1}}.
           </div>
           <div>
@@ -146,9 +167,12 @@ export default {
       value1: true,
       isOpenModal: false,
       isOpenModalBBB: false,
+      isOpenEdit:false,
       title:'',
       subjuects:[],
-      teacher:''
+      teacher:'',
+      changedTitle:'',
+      editId:""
     }
   },
   mounted() {
@@ -163,6 +187,17 @@ export default {
     this.getSubjects()
   },
   methods: {
+    edit(){
+      axios.put(`https://api.fastlms.uz/api/teacher_topic/change/${this.editId}/`,
+          {
+            name:this.changedTitle,
+            content_teacher_connect:this.id,
+            teacher_id:625
+          }).then(()=>{
+        this.getSubjects()
+        this.closeModalEdit()
+      })
+    },
     onChangeSwitch(newValue) {
       axios.post(`https://api.fastlms.uz/api/teacher_topic/active/`,{
         teacher_id:625,
@@ -179,6 +214,14 @@ export default {
     },
     closeModal(){
       this.isOpenModal = !this.isOpenModal
+    },
+    showModalEdit(id) {
+      this.editId = id
+      this.isOpenEdit = !this.isOpenEdit
+    },
+    closeModalEdit(){
+
+      this.isOpenEdit = !this.isOpenEdit
     },
     showModalBBB() {
       this.isOpenModalBBB = !this.isOpenModalBBB

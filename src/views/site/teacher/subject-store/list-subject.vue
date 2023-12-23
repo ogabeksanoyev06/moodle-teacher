@@ -77,15 +77,20 @@
           </div>
         </div>
       </div>
-      <router-link :to="{name:'list-view',params:{id:item.content_id.id,nextId:item.id}}" >
+      
       <div class="footer-card">
-
+  <router-link class="button-card" :to="{ name: 'list-view', params: { id: item.content_id.id, nextId: item.id } }" >
         <button class="button-card">
           Tahrirlash
         </button>
-
-      </div>
+        </router-link>
+        <router-link class="button-card" :to="{ name: 'lessons', params: { id: item.content_id.id, nextId: item.id } }" >
+  <button class="button-card">
+            Dars o'tish
+          </button>
       </router-link>
+      </div>
+      
     </div>
   </div>
 </div>
@@ -199,9 +204,13 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    
+    }
       .button-card{
         height: 24px;
-        width: 100%;
+        width: 100% !important;
         border-radius: 12px;
         background:  linear-gradient(133deg, #008BF8 0.82%, #0043A7 99.18%);
         color:  #F2F3F8;
@@ -211,7 +220,6 @@ export default {
         line-height: normal;
         letter-spacing: -0.24px;
       }
-    }
   }
 }
 </style>
