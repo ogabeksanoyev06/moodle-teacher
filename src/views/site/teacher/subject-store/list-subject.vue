@@ -114,8 +114,10 @@ export default {
       axios.post('https://api.fastlms.uz/api/teacher_contents/',{teacher_id:625}).then((res)=>{
         this.subjects=res.data.result
         console.log(res)
+      }).catch(()=>{
+
       })
-    }
+    },
   },
   mounted() {
     this.getSubjects()
