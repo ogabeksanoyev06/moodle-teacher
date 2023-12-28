@@ -248,6 +248,10 @@ export default {
         this.successNotification('Resurs file yaratildi')
         this.closeModal()
         this.getResurces()
+        this.resurce.name = ''
+            this.resurce.file=null
+      }).catch((err)=>{
+        this.errorNotification(err.response.data.message)
       })
     },
     createVideo(){
@@ -265,6 +269,10 @@ export default {
         this.successNotification('Resurs file yaratildi')
         this.closeModalVid()
         this.getResurces()
+        this.vidio.name = ''
+        this.vidio.vidio = null
+      }).catch((err)=>{
+        this.errorNotification(err.response.data.message)
       })
     },
     showModal() {
