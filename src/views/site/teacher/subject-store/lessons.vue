@@ -65,7 +65,7 @@
                     <div class="action">
                     
                       
-                        <router-link :to="{ name: 'task-view', params: { id: t.id } }">
+                        <router-link :to="{ name: 'task-view-for-result', params: { id: t.id } }">
                             <button class="common-use-button">
                                 Topshiriqlar
                                 <img src="/svg/subject.svg" alt="" />

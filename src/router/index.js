@@ -50,6 +50,13 @@ const routes = [
             "@/views/site/teacher/subject-store/task-view.vue"
             ),
         props: true
+      }, {
+        path: 'list/subject/task/view/:id',
+        name: 'task-view-for-result',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/task-view-for-result.vue"
+            ),
+        props: true
       },
       {
         path: 'list/subject/task/group-add/:topic_id',

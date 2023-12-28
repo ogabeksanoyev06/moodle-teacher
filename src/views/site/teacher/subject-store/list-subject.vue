@@ -44,7 +44,7 @@
         </div>
         <div class="info-section">
           <div class="tag">
-            {{item.content_id.topic_count}}
+            {{item.topic_count}}
           </div>
           <div class="info">
             <img width="13" height="13" src="/svg/amountLecture.svg" alt=""/>
@@ -57,7 +57,7 @@
         </div>
         <div class="info-section">
           <div class="tag">
-            {{item.content_id.video_count}}
+            {{item.video_count}}
           </div>
           <div class="info">
             <img width="13" height="13" src="/svg/vidio.svg" alt=""/>
@@ -70,7 +70,7 @@
         </div>
         <div class="info-section">
           <div class="tag">
-            {{ item.content_id.task_count}}
+            {{ item.task_count}}
           </div>
           <div class="info">
             <img width="13" height="13" src="/svg/user.svg" alt=""/>
