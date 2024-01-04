@@ -74,6 +74,14 @@ const routes = [
             ),
         props: true
       },
+        {
+        path: 'list/subject/task/view/student/:task_id',
+        name: 'task-view-for-result-student',
+        component:()=>import(
+            "@/views/site/teacher/subject-store/task-view-for-result-student.vue"
+            ),
+        props: true
+      },
        
   {
         path: 'lessons/:id/:nextId',

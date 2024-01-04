@@ -1,7 +1,7 @@
 
 
 <template>
-  <div>
+  <div class="card files">
     <div class="list-name">Topshiriqlar ro‘yxati</div>
     <div class="body-list">
       <div v-for="(item,index) in this.tasks" :key="index" class="body-list-item">
@@ -21,7 +21,7 @@
             <span>Ajratilgan ball</span>
                  {{item.score}}
           </div>
-          <router-link to="">
+          <router-link :to="{name:'task-view-for-result-student',params:{task_id:item.id}}">
           <button class="common-use-button">
             Baholash
           </button>
@@ -43,7 +43,7 @@ export default {
   },
   methods:{
     getTasks(){
-    axios.get(`https://api.fastlms.uz/api/tasks/view/?topic_id=${this.id}&teacher_id=625`).then((res)=>{
+    axios.get(`https://api.fastlms.uz/api/tasks/view/?topic_id=${this.id}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}`).then((res)=>{
       console.log(res)
       this.tasks=res.data.result
     })
@@ -66,6 +66,9 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.files{
+  padding: 5px;
+}
 .head-add-buttons {
   display: flex;
   align-items: center;

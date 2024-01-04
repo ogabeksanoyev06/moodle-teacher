@@ -192,13 +192,13 @@ export default {
   },
   methods: {
     deleteFile(fileId){
-      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/file/?pk=${fileId}&teacher_id=625&topic_id=${this.id}`).then(()=>{
+      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/file/?pk=${fileId}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}&topic_id=${this.id}`).then(()=>{
         this.successNotification("File o'chirildi!");
         this.getResurces()
       })
     },
     deleteVideo(fileId){
-      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/video/?pk=${fileId}&teacher_id=625&topic_id=${this.id}`).then(()=>{
+      axios.delete(`https://api.fastlms.uz/api/teacher_topic/delete/video/?pk=${fileId}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}&topic_id=${this.id}`).then(()=>{
         this.successNotification("Video file o'chirildi!");
         this.getResurces()
       })
@@ -238,7 +238,7 @@ export default {
       formData.append('name',this.resurce.name)
       formData.append('files',this.resurce.file)
       formData.append('topic_id',this.id)
-      formData.append('teacher_id',625)
+      formData.append('teacher_id',JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number)
 
       axios.post('https://api.fastlms.uz/api/teacher_topic/add/file/',formData,{
         headers:{
@@ -259,7 +259,7 @@ export default {
       formData.append('name',this.vidio.name)
       formData.append('video',this.vidio.vidio)
       formData.append('topic_id',this.id)
-      formData.append('teacher_id',625)
+      formData.append('teacher_id',JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number)
 
       axios.post('https://api.fastlms.uz/api/teacher_topic/add/video/',formData,{
         headers:{
@@ -288,7 +288,7 @@ export default {
       this.isOpenModalVid = !this.isOpenModalVid
     },
     getResurces(){
-      axios.get(`https://api.fastlms.uz/api/teacher_topic/view/?topic_id=${this.id}&teacher_id=625`).then((res)=>{
+      axios.get(`https://api.fastlms.uz/api/teacher_topic/view/?topic_id=${this.id}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}`).then((res)=>{
         this.videos=res.data.result.topic_videos
         this.files=res.data.result.topic_files
         console.log(res)

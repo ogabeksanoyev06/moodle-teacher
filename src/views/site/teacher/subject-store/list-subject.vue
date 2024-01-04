@@ -111,7 +111,7 @@ export default {
   },
   methods:{
     getSubjects(){
-      axios.post('https://api.fastlms.uz/api/teacher_contents/',{teacher_id:625}).then((res)=>{
+      axios.post('https://api.fastlms.uz/api/teacher_contents/',{teacher_id:JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}).then((res)=>{
         this.subjects=res.data.result
         console.log(res)
       }).catch(()=>{

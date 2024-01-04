@@ -56,7 +56,7 @@ export default {
   },
   methods:{
     getTasks(){
-    axios.get(`https://api.fastlms.uz/api/tasks/view/?topic_id=${this.id}&teacher_id=625`).then((res)=>{
+    axios.get(`https://api.fastlms.uz/api/tasks/view/?topic_id=${this.id}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}`).then((res)=>{
       this.tasks=res.data.result
     })
     },

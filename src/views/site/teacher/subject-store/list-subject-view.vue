@@ -169,14 +169,6 @@ export default {
     }
   },
   mounted() {
-    axios.post('https://api.fastlms.uz/api/teacher_get_basic_id/', {
-      teacher_id: 625,
-
-    }).then((res) => {
-      console.log(res.data.teacher)
-
-      this.teacher = res.data.teacher
-    })
     this.getSubjects()
   },
   methods: {
@@ -185,7 +177,7 @@ export default {
         name: this.bigbluebutton.name,
         maxParticipants: this.bigbluebutton.maxParticipants,
         duration: this.bigbluebutton.duration,
-        teacher_id:625,
+        teacher_id:JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number,
         topic_id:this.topicId
       }).then((res) => {
         console.log(res)
@@ -198,7 +190,7 @@ export default {
           {
             name: this.changedTitle,
             content_teacher_connect: this.id,
-            teacher_id: 625
+            teacher_id: JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number
           }).then(() => {
         this.getSubjects()
         this.closeModalEdit()
@@ -206,7 +198,7 @@ export default {
     },
     onChangeSwitch(newValue) {
       axios.post(`https://api.fastlms.uz/api/teacher_topic/active/`, {
-        teacher_id: 625,
+        teacher_id: JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number,
         content_id_topic: this.id,
         content_teacher_connect: this.nextId,
         topic_id: newValue.id
@@ -239,7 +231,7 @@ export default {
     },
     getSubjects() {
       axios.post("https://api.fastlms.uz/api/teacher_topics/", {
-        teacher_id: 625,
+        teacher_id: JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number,
         content_id_topic: this.id,
         content_teacher_connect: this.nextId
       }).then((res) => {
@@ -251,7 +243,7 @@ export default {
       console.log(this.id)
       axios.post('https://api.fastlms.uz/api/teacher_topic/add/', {
         content_id_topic: this.id,
-        teacher_id: 625,
+        teacher_id: JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number,
         name: this.title,
         content_teacher_connect: this.nextId
       }).then((res) => {

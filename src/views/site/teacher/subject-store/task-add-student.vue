@@ -124,7 +124,7 @@ export default {
         dateTimer: [],
         task_id_type: '',
         score: '',
-        teacher_id: 625,
+        teacher_id: JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number,
         task_check: true,
         task_group: {},
         task_files: []
@@ -162,7 +162,7 @@ export default {
   },
   methods: {
     getGroups() {
-      axios.get(`https://api.fastlms.uz/api/tasks/groups/?topic_id=${this.topic_id}&teacher_id=625`).then((res) => {
+      axios.get(`https://api.fastlms.uz/api/tasks/groups/?topic_id=${this.topic_id}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}`).then((res) => {
         this.optionTable = res.data.result;
         console.log(res)
 
@@ -177,7 +177,7 @@ export default {
     },
     getStudent() {
       console.log('aaa')
-      axios.get(`https://api.fastlms.uz/api/tasks/group/students/?group_id=${this.tempGroup}&teacher_id=625`).then((res) => {
+      axios.get(`https://api.fastlms.uz/api/tasks/group/students/?group_id=${this.tempGroup}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}`).then((res) => {
         this.tableData = res.data.result
       })
     },
@@ -259,7 +259,7 @@ export default {
             this.tempGroup=''
           }).catch((err)=>{
             console.log(err)
-            this.notificationMessage(err.response.data.message[0], "error");
+            this.notificationMessage(err.response.data.message, "error");
           })
         } else {
           console.log('error submit!!');

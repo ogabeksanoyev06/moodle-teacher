@@ -52,20 +52,16 @@ export default {
       isOpenModalBBB: false,
       title: '',
       subjuects: [],
-      teacher: ''
+
     }
   },
   mounted() {
-    axios.post('https://api.fastlms.uz/api/teacher_get_basic_id/', {
-      teacher_id: 625,
-    }).then((res) => {
-      this.teacher = res.data.teacher
-    })
+
     this.getSubjects()
   },
   methods: {
     openBBB(id) {
-      axios.get(`https://api.fastlms.uz/api/teacher/bigbluebutton/create/?teacher_id=625&topic_id=${id}`).then((res) => {
+      axios.get(`https://api.fastlms.uz/api/teacher/bigbluebutton/create/?teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}&topic_id=${id}`).then((res) => {
         console.log(res.data.results.id)
         this.join(res.data.results.id)
       }).catch(()=>{
@@ -85,7 +81,7 @@ export default {
     },
     getSubjects() {
       axios.post("https://api.fastlms.uz/api/teacher_topics/", {
-        teacher_id: 625,
+        teacher_id: JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number,
         content_id_topic: this.id,
         content_teacher_connect: this.nextId
       }).then((res) => {
