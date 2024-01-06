@@ -13,13 +13,16 @@
             {{item.task_group_id.name}}
           </div>
           <div class="end-date">
-            <button @click="openFile" class="common-use-button">
+            <button v-show="item.file_status" @click="download(item.student_file)" class="common-use-button">
               Filelar
             </button>
           </div>
-          <button @click="openMark(item.task_student_id)" class="common-use-button">
+          <button v-show="!item.mark_status" @click="openMark(item)" class="common-use-button">
             Baholash
           </button>
+          <div v-show="item.mark_status">
+            Baholangan
+          </div>
         </div>
       </div>
     </div>
@@ -43,7 +46,20 @@
           {{this.tempStudent.full_name}}ni <br>
           baholash
         </div>
+<div class="main-form">
+        <el-form label-position="top" :model="mark" :rules="rules" ref="mark" label-width="120px" class="demo-ruleForm">
+          <el-form-item label="Baho" prop="mark">
+            <el-input type="number" v-model="mark.mark"></el-input>
+          </el-form-item>
+          <el-form-item label="Izoh" prop="comment">
+            <el-input type="textarea" v-model="mark.comment"></el-input>
+          </el-form-item>
 
+        </el-form>
+        <button class="common-use-button big-one" @click="marking('mark',$event)">
+          Saqlash
+        </button>
+  </div>
       </div>
     </div>
   </div>
@@ -59,15 +75,75 @@ export default {
       tasks:[],
       isOpenFile:false,
       isOpenMark:false,
-      tempStudent:{}
+      tempStudent:{},
+      mark:{
+        mark:'',
+        comment:'',
+        teacher_id:JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number,
+        task_id:'',
+        student_id:'',
+        task_student_id:''
+      },
+      rules: {
+        mark: [
+          {required: true, message: "Iltimos to'ldiring", trigger: 'blur'},
+        ],
+        comment: [
+          {required: true, message: "Iltimos to'ldiring", trigger: 'blue'}
+        ],
+      }
     }
   },
   methods:{
+    marking(formName,e) {
+      e.preventDefault()
+
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          axios.post('https://api.fastlms.uz/api/teacher_task/student/mark/', this.mark).then((res) => {
+            console.log(res)
+            this.$refs[formName].resetFields();
+            this.notificationMessage("Baho muofaqiyatli qo'shildi!", "success");
+            this.isOpenMark=false
+            this.getTasks()
+          }).catch((err)=>{
+            console.log(err)
+            this.notificationMessage(err.response.data.message, "error");
+          })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
     openFile(){
       this.isOpenFile = true
     },openMark(student){
-      this.tempStudent = student
+      this.mark.task_id = student.tasks_id.id
+      this.mark.student_id = student.task_student_id.id
+      this.mark.task_student_id = student.id
+      this.tempStudent = student.task_student_id
       this.isOpenMark = true
+    },
+    download(file){
+      axios.get(`https://api.fastlms.uz${file}`, { responseType: 'blob' }) // Set responseType to 'blob'
+          .then((res) => {
+            this.handleDownloadResponse(res, file)
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+    },
+    handleDownloadResponse(response, file) {
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      const filename = file.split('/').pop();
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(link.href);
     },
     getTasks(){
     axios.get(`https://api.fastlms.uz/api/teacher_task_list/students/?task_id=${this.task_id}&teacher_id=${JSON.parse(localStorage.getItem('employeeInfo')).employee_id_number}`).then((res)=>{
@@ -225,5 +301,10 @@ export default {
       padding: 10px 20px;
     }
   }
+}
+.main-form{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
