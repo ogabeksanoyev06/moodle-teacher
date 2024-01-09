@@ -1,5 +1,5 @@
 <template>
-  <section class="content">
+  <section class="card">
     <app-loading v-if="loading" />
     <div class="box" v-else>
       <ValidationObserver  v-slot="{ handleSubmit }">
