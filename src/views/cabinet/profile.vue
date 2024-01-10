@@ -54,40 +54,7 @@
                   v-model="profile.email"
                 />
                 <br />
-                <div class="checkbo checkbo-ready">
-                  <div class="form-group">
-                    <input type="checkbox" id="checkbox" v-model="isChecked" />
-                    <label for="checkbox" class="checkbox-label">
-                      <span
-                        class="checkbox-custom"
-                        :class="{ checked: isChecked }"
-                      >
-                        <i v-if="isChecked" class="fa fa-check"></i>
-                      </span>
-                      Joriy holat
-                    </label>
-                  </div>
-                  <ValidationObserver>
-                    <base-input
-                      type="text"
-                      vid="Parol"
-                      rules="required"
-                      label="Yangi parol"
-                      placeholder="Yangi parol"
-                      v-model="profile.password"
-                      :disabled="!isChecked"
-                    />
-                    <base-input
-                      type="text"
-                      vid="Parol tasdig‘i"
-                      :rules="isChecked ? 'required|confirmed:Parol' : ''"
-                      label="Parol tasdig‘i"
-                      placeholder="Parol tasdig‘i"
-                      v-model="confirmPassword"
-                      :disabled="!isChecked"
-                    />
-                  </ValidationObserver>
-                </div>
+
               </div>
               <div class="box__inner-right">
                 <div class="account__photo">
@@ -98,17 +65,6 @@
                 </div> -->
               </div>
             </div>
-            <div class="box__footer">
-              <app-button
-                theme="main"
-                type="submit"
-                :height="40"
-                :font-size="isMobileSmall ? 12 : isMobile ? 14 : 16"
-                :sides="10"
-              >
-                O‘zgartirish
-              </app-button>
-            </div>
           </form>
         </ValidationObserver>
       </div>
@@ -117,12 +73,11 @@
 </template>
 <script>
 import { ValidationObserver } from "vee-validate";
-import AppButton from "@/components/shared-components/AppButton.vue";
 import BaseInput from "@/components/shared-components/BaseInput.vue";
 
 export default {
   name: "StudentProfile",
-  components: { ValidationObserver, AppButton, BaseInput },
+  components: { ValidationObserver, BaseInput },
   data() {
     return {
       profile: JSON.parse(localStorage.getItem('employeeInfo')),

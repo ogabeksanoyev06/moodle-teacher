@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="card">
     <div class="box">
       <div class="box-header">
         <div>
