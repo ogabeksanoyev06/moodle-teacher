@@ -1,5 +1,5 @@
 <template>
-<div class="container list-subjects">
+<div class=" list-subjects">
   <div v-for="item in subjects" :key="item.id" class="subject-list-card">
     <div class="header-card">
       <div class="title-card">{{item.content_id.subject_id.name}}</div>

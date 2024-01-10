@@ -15,13 +15,9 @@ const routes = [
     component: () => import("../layouts/MainLayout.vue"),
     meta: { requiresAuth: true },
     children: [
+
       {
-        path: "/",
-        name: "home",
-        component: () => import("../views/site/home/index.vue"),
-      },
-      {
-        path: 'list/subject',
+        path: '/',
         name: 'list-subject',
         component:()=>import(
             "@/views/site/teacher/subject-store/list-subject.vue"

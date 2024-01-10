@@ -8,16 +8,7 @@
           <div
               class="mr-auto float-left bookmark-wrapper d-flex align-items-center"
           >
-            <ul class="nav navbar-nav">
-              <li class="nav-item mobile-menu d-xl-none mr-auto">
-                <a
-                    class="nav-link nav-menu-main menu-toggle hidden-xs is-active"
-                    href="#"
-                >
-                  <i class="ficon feather icon-menu" />
-                </a>
-              </li>
-            </ul>
+
           </div>
           <ul class="nav navbar-nav float-right">
             <li class="dropdown dropdown-user nav-item">

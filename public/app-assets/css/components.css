@@ -27,7 +27,6 @@ html body .content {
   min-height: -webkit-calc(100% - 4rem);
   min-height: -moz-calc(100% - 4rem);
   min-height: calc(100% - 4rem);
-  margin-left: 260px;
 }
 html body .content.app-content {
   overflow: hidden;

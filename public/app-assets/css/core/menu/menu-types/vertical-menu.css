@@ -278,14 +278,15 @@ body.vertical-layout.vertical-menu-modern.menu-collapsed .main-menu.expanded .mo
   display : block;
 }
 
-body.vertical-layout.vertical-menu-modern.menu-collapsed .app-content, body.vertical-layout.vertical-menu-modern.menu-collapsed .footer {
-  margin-left : 80px;
-}
+/*body.vertical-layout.vertical-menu-modern.menu-collapsed .app-content, body.vertical-layout.vertical-menu-modern.menu-collapsed .footer {*/
+/*  margin-left : 80px;*/
+/*}*/
 
 body.vertical-layout.vertical-menu-modern.menu-collapsed .app-content .header-navbar.floating-nav {
-  width : -webkit-calc(100% - 4.4rem - 80px);
-  width :    -moz-calc(100% - 4.4rem - 80px);
-  width :         calc(100% - 4.4rem - 80px);
+  /*width : -webkit-calc(100% - 4.4rem - 80px);*/
+  /*width :    -moz-calc(100% - 4.4rem - 80px);*/
+  /*width :         calc(100% - 4.4rem - 80px);*/
+    width:calc(100% - 30px)
 }
 
 body.vertical-layout.vertical-menu-modern.menu-collapsed.menu-flipped .content {
@@ -378,9 +379,8 @@ body.vertical-layout.vertical-menu-modern.menu-collapsed.menu-flipped .footer {
     margin-left : 0;
   }
   body.vertical-layout.vertical-overlay-menu .app-content .header-navbar.floating-nav {
-    width : -webkit-calc(100% - 4.4rem);
-    width :    -moz-calc(100% - 4.4rem);
-    width :         calc(100% - 4.4rem);
+
+    width : calc(100% - 30px);
   }
 }
 
